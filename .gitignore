@@ -1,9 +1,14 @@
 
 proj.win32/*.vcxproj
 proj.win32/*.vcxproj.filters
+proj.win32/*.vcxproj.user
 proj.win32/CMakeCache.txt
 proj.win32/CMakeFiles/*
 proj.win32/Techies.sln
 proj.win32/cmake_install.cmake
 proj.win32/engine/*
-
+proj.win32/.vs/*
+proj.win32/bin/*
+proj.win32/lib/*
+proj.win32/Techies.dir/*
+proj.win32/Win32/*
