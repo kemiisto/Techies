@@ -57,11 +57,25 @@ endif()
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
+     Classes/GameScene.cpp
+     Classes/Creep.cpp
+     Classes/Creeps.cpp
+     Classes/MeleeCreep.cpp
+     Classes/Mine.cpp
+     Classes/RangedCreep.cpp
+     Classes/SiegeCreep.cpp
+     Classes/Techies.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
+     Classes/GameScene.h
+     Classes/Creep.h
+     Classes/Creeps.h
+     Classes/MeleeCreep.h
+     Classes/Mine.h
+     Classes/RangedCreep.h
+     Classes/SiegeCreep.h
+     Classes/Techies.h
      )
 
 if(ANDROID)
