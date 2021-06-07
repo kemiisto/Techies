@@ -20,4 +20,4 @@ Build instructions:
   - `cd proj.win32`
   - `cmake .. -G "Visual Studio 16 2019" -AWin32`
   - Open Techies.sln, set Techies as startup project.
-  - Open Techies project properties, go to C/C++ -> Language and change "C++ Language Standard" values to "ISO C++17 Standard (/std:c++17)".
+  - Open Techies project properties, go to C/C++ -> Language and change "C++ Language Standard" value to "ISO C++17 Standard (/std:c++17)".
