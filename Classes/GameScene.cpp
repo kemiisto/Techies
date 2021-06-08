@@ -42,12 +42,11 @@ bool GameScene::init() {
     }
     
     createBackground();
-    createHUD();
     createLabels();
+    createTechies();
     createRemoteMine();
     createProximityMine();
-    createTechies();
-    createIcons();
+    createHUD();
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -82,13 +81,21 @@ void GameScene::createHUD() {
     scoreLabel->setAnchorPoint(Vec2(1.0, 0.0));
     scoreLabel->setPosition(Vec2(screenSize.width-10, 0));
     scoreLabel->enableOutline(Color4B::BLACK, 3);
-    addChild(scoreLabel);
+    addChild(scoreLabel, 1);
     
     healthLabel = Label::createWithTTF("HEALTH: 100%", "fonts/Marker Felt.ttf", 60);
     healthLabel->setAnchorPoint(Vec2(0.0, 0.0));
     healthLabel->setPosition(Vec2(10, 0));
     healthLabel->enableOutline(Color4B::BLACK, 3);
-    addChild(healthLabel);
+    addChild(healthLabel, 1);
+
+    drawNode = DrawNode::create();
+    addChild(drawNode, 1);
+    drawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, GRAY);
+    drawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size,
+        Color4F::WHITE);
+    drawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, GRAY);
+    drawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
 }
 
 void GameScene::createLabels() {
@@ -107,14 +114,14 @@ void GameScene::createLabels() {
 
 void GameScene::createRemoteMine() {
     remoteMine = Mine::create(this, "fx_techies_remotebomb.png", Vec2(screenSize.width/2 + 60, 60));
-    addChild(remoteMine, 1);
+    addChild(remoteMine, 2);
     mines.push_back(remoteMine);
     remoteMineIconRect = Rect(screenSize.width/2, 0, 125, 125);
 }
 
 void GameScene::createProximityMine() {
     proximityMine = Mine::create(this, "fx_techiesfx_mine.png", Vec2(screenSize.width/2 - 60, 60));
-    addChild(proximityMine, 1);
+    addChild(proximityMine, 2);
     mines.push_back(proximityMine);
     proximityMineIconRect = Rect(screenSize.width/2 - 125, 0, 125, 125);
 }
@@ -283,15 +290,3 @@ void GameScene::changeHealth(const int value) {
     }
     updateHUD();
 }
-
-void GameScene::createIcons() {
-    drawNode = DrawNode::create();
-    addChild(drawNode, 0);
-    drawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, GRAY);
-    drawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size,
-                       Color4F::WHITE);
-    drawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, GRAY);
-    drawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
-
-}
-

@@ -73,8 +73,6 @@ namespace techies {
 
         void createTechies();
         
-        void createIcons();
-        
         void updateHUD();
         
         void checkCollisionsWithCrater(const cocos2d::Sprite* crater);
