@@ -287,9 +287,10 @@ void GameScene::onTouchMoved(Touch* touch, Event* event) {
 
 void GameScene::onTouchEnded(Touch* touch, Event* event) {
     if (touch) {
-	    const auto touchLocation = touch->getLocation();
+	    auto touchLocation = touch->getLocation();
         for (const auto mine : mines) {
             if (mine->getTouch() && mine->getTouch() == touch) {
+                keepMineInsideScreen(proximityMine, touchLocation);
                 techies->plantMine(mine, touchLocation);
             }
         }
