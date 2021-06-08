@@ -5,7 +5,6 @@
 #include "GameScene.h"
 
 using namespace cocos2d;
-using namespace techies;
 
 const std::map<Creep::Type, std::size_t> maxCreepsOfType = {
 	{Creep::Type::Melee,  20},

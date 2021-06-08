@@ -4,7 +4,6 @@
 
 using namespace cocos2d;
 using namespace CocosDenshion;
-using namespace techies;
 
 Mine::Mine(const Vec2& position) : Sprite(),
         originalPosition(position),

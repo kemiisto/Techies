@@ -2,7 +2,6 @@
 #include "GameScene.h"
 
 using namespace cocos2d;
-using namespace techies;
 
 static Size designResolutionSize = Size(1536, 2048);
 static Size smallResolutionSize = Size(320, 480);

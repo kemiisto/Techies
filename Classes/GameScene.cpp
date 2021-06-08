@@ -8,7 +8,6 @@
 
 using namespace cocos2d;
 using namespace CocosDenshion;
-using namespace techies;
 using namespace rapidjson;
 
 const Color4F GRAY(0.501f, 0.501f, 0.501f, 1.0f);

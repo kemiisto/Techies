@@ -1,7 +1,6 @@
 #include "MeleeCreep.h"
 
 using namespace cocos2d;
-using namespace techies;
 
 MeleeCreep::MeleeCreep() :
         Creep("creep_melee", {3, {24, 48, 45}, {52, 52, 45}}) {

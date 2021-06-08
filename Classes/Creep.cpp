@@ -6,7 +6,6 @@
 #include "SiegeCreep.h"
 
 using namespace cocos2d;
-using namespace techies;
 
 float randomFloat(const float min, const float max) {
     static std::default_random_engine e;
