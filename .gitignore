@@ -1,4 +1,4 @@
-
+*.DS_Store
 proj.win32/*.vcxproj
 proj.win32/*.vcxproj.filters
 proj.win32/*.vcxproj.user

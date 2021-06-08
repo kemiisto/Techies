@@ -14,9 +14,9 @@ const std::map<Creep::Type, std::size_t> maxCreepsOfType = {
 };
 
 const std::map<Creep::Type, float> creepScale = {
-    {Creep::Type::Melee,  0.400f},
-    {Creep::Type::Ranged, 0.375f},
-    {Creep::Type::Siege,  0.300f}
+    {Creep::Type::Melee,  0.800f},
+    {Creep::Type::Ranged, 0.750f},
+    {Creep::Type::Siege,  0.600f}
 };
 
 Creeps::Creeps(GameScene* scene) :

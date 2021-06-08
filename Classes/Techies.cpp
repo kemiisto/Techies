@@ -18,10 +18,9 @@ techies::Techies::~Techies() {
 
 Techies* Techies::create(const cocos2d::Vec2& position) {
     auto object = new Techies(position);
-    if (object->initWithFile("Techies_Hero/00.png")) {
+    if (object->initWithFile("techies/00.png")) {
         object->setAnchorPoint(Vec2(0.5, 0));
         object->setPosition(position);
-        object->setScale(0.5f);
         object->createMinePlantingAnimation();
         object->autorelease();
         return object;
@@ -75,7 +74,7 @@ void Techies::setIdle() {
 void techies::Techies::createMinePlantingAnimation() {
     minePlantingAnimation = Animation::create();
     for (int i = 0; i < 44; ++i) {
-        auto name = StringUtils::format("Techies_Hero/%02d.png", i);
+        auto name = StringUtils::format("techies/%02d.png", i);
         minePlantingAnimation->addSpriteFrameWithFile(name);
     }
     minePlantingAnimation->setDelayPerUnit(0.03f);
