@@ -1,11 +1,29 @@
 #include "GameScene.h"
+
+#include <fstream>
+
 #include "cocos/editor-support/cocostudio/SimpleAudioEngine.h"
+#include "json/document.h"
+#include "json/istreamwrapper.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace techies;
+using namespace rapidjson;
 
 const Color4F GRAY(0.501f, 0.501f, 0.501f, 1.0f);
+
+Creep::Type creepTypeFromString(const std::string& s) {
+	if (s == "Melee") {
+        return Creep::Type::Melee;
+	} else if (s == "Ranged") {
+		return Creep::Type::Ranged;
+	} else if (s == "Siege") {
+        return Creep::Type::Siege;
+    } else {
+        throw std::invalid_argument("Unknown creep type!");
+    }
+}
 
 GameScene::GameScene() :
 	state(GameState::Launched),
@@ -15,11 +33,8 @@ GameScene::GameScene() :
 	remoteMine(nullptr),
 	proximityMine(nullptr),
 	techies(nullptr),
-	creepsSpawnIntervals{
-		{Creep::Type::Melee, 3.0f},
-		{Creep::Type::Ranged, 6.0f},
-		{Creep::Type::Siege, 9.0f}
-	}, creepsTimers{
+	creepsSpawnIntervals{},
+	creepsTimers{
 		{Creep::Type::Melee, 2.0f},
 		{Creep::Type::Ranged, 0.0f},
 		{Creep::Type::Siege, 0.0f}
@@ -40,6 +55,8 @@ bool GameScene::init() {
     if (!Scene::init()) {
         return false;
     }
+
+    readConfig();
     
     createBackground();
     createLabels();
@@ -110,6 +127,17 @@ void GameScene::createLabels() {
     gameOverLabel->enableOutline(Color4B::BLACK, 3);
     gameOverLabel->setVisible(false);
     addChild(gameOverLabel, 1);
+}
+
+void GameScene::readConfig() {
+    std::ifstream ifs(FileUtils::getInstance()->fullPathForFilename("config.json"));
+    IStreamWrapper isw(ifs);
+    Document d;
+    d.ParseStream(isw);
+
+    for (const auto& e : d["creepsSpawnIntervals"].GetObject()) {
+        creepsSpawnIntervals[creepTypeFromString(e.name.GetString())] = e.value.GetFloat();
+    }
 }
 
 void GameScene::createRemoteMine() {

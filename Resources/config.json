@@ -1,0 +1,7 @@
+{
+	"creepsSpawnIntervals": {
+		"Melee": 3.0,
+		"Ranged": 6.0,
+		"Siege": 9.0
+	}
+}

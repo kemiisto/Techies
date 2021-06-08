@@ -66,6 +66,8 @@ namespace techies {
         void createHUD();
         void createLabels();
 
+        void readConfig();
+
         void spawnCreep(const Creep::Type& creepType);
         
         void createRemoteMine();
