@@ -95,14 +95,14 @@ void GameScene::createLabels() {
     playLabel = Label::createWithTTF("PLAY!", "fonts/Marker Felt.ttf", 180);
     playLabel->setPosition(screenSize/2);
     playLabel->enableOutline(Color4B::BLACK, 3);
-    addChild(playLabel);
+    addChild(playLabel, 1);
     
     gameOverLabel = Label::createWithTTF("WASTED", "fonts/Marker Felt.ttf", 180);
     gameOverLabel->setPosition(screenSize/2);
     gameOverLabel->setColor(Color3B::RED);
     gameOverLabel->enableOutline(Color4B::BLACK, 3);
     gameOverLabel->setVisible(false);
-    addChild(gameOverLabel);
+    addChild(gameOverLabel, 1);
 }
 
 void GameScene::createRemoteMine() {
