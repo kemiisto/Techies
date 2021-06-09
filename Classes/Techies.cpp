@@ -11,16 +11,16 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-Techies::Techies(const cocos2d::Vec2& position) : Sprite(),
-		minePlantingAnimation(nullptr),
-		state(State::Idle) {
+Techies::Techies(const Vec2& position) : Sprite(),
+         minePlantingAnimation(nullptr),
+         state(State::Idle) {
 }
 
 Techies::~Techies() {
     minePlantingAnimation->release();
 }
 
-Techies* Techies::create(const cocos2d::Vec2& position) {
+Techies* Techies::create(const Vec2& position) {
     auto object = new Techies(position);
     if (object->initWithFile("techies/00.png")) {
         object->setAnchorPoint(Vec2(0.5, 0));
@@ -35,7 +35,7 @@ Techies* Techies::create(const cocos2d::Vec2& position) {
 
 
 
-void Techies::plantMine(Mine* mine, const cocos2d::Vec2& location) {
+void Techies::plantMine(Mine* mine, const Vec2& location) {
     assert(state == State::Idle);
 	
     const auto v = location - getPosition();

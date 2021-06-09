@@ -21,13 +21,14 @@ const Color4F GRAY(0.501f, 0.501f, 0.501f, 1.0f);
 Creep::Type creepTypeFromString(const std::string& s) {
 	if (s == "Melee") {
         return Creep::Type::Melee;
-	} else if (s == "Ranged") {
+	}
+	if (s == "Ranged") {
 		return Creep::Type::Ranged;
-	} else if (s == "Siege") {
-        return Creep::Type::Siege;
-    } else {
-        throw std::invalid_argument("Unknown creep type!");
-    }
+	}
+	if (s == "Siege") {
+		return Creep::Type::Siege;
+	}
+	throw std::invalid_argument("Unknown creep type!");
 }
 
 GameScene::GameScene() :
@@ -39,7 +40,6 @@ GameScene::GameScene() :
 	remoteMine(nullptr),
 	proximityMine(nullptr),
 	techies(nullptr),
-	creepsSpawnIntervals{},
 	creepsTimers{
 		{Creep::Type::Melee, 2.0f},
 		{Creep::Type::Ranged, 0.0f},
@@ -101,13 +101,13 @@ void GameScene::createBackground() {
 }
 
 void GameScene::createHUD() {
-    scoreLabel = Label::createWithTTF("SCORE: 0", "fonts/Marker Felt.ttf", 60);
+    scoreLabel = Label::createWithTTF("SCORE: 0", "fonts/Pricedown.ttf", 60);
     scoreLabel->setAnchorPoint(Vec2(1.0, 0.0));
     scoreLabel->setPosition(Vec2(screenSize.width-10, 0));
     scoreLabel->enableOutline(Color4B::BLACK, 3);
     addChild(scoreLabel, 1);
     
-    healthLabel = Label::createWithTTF("HEALTH: 100%", "fonts/Marker Felt.ttf", 60);
+    healthLabel = Label::createWithTTF("HEALTH: 100%", "fonts/Pricedown.ttf", 60);
     healthLabel->setAnchorPoint(Vec2(0.0, 0.0));
     healthLabel->setPosition(Vec2(10, 0));
     healthLabel->enableOutline(Color4B::BLACK, 3);
@@ -131,12 +131,12 @@ void GameScene::createForbiddenRegionDrawNode() {
 }
 
 void GameScene::createLabels() {
-    playLabel = Label::createWithTTF("PLAY!", "fonts/Marker Felt.ttf", 180);
+    playLabel = Label::createWithTTF("PLAY!", "fonts/Pricedown.ttf", 180);
     playLabel->setPosition(screenSize/2);
     playLabel->enableOutline(Color4B::BLACK, 3);
     addChild(playLabel, 1);
     
-    gameOverLabel = Label::createWithTTF("WASTED", "fonts/Marker Felt.ttf", 180);
+    gameOverLabel = Label::createWithTTF("WASTED", "fonts/Pricedown.ttf", 180);
     gameOverLabel->setPosition(screenSize/2);
     gameOverLabel->setColor(Color3B::RED);
     gameOverLabel->enableOutline(Color4B::BLACK, 3);
@@ -150,8 +150,8 @@ void GameScene::readConfig() {
     Document d;
     d.ParseStream(isw);
 
-    for (const auto& e : d["creepsSpawnIntervals"].GetObject()) {
-        creepsSpawnIntervals[creepTypeFromString(e.name.GetString())] = e.value.GetFloat();
+    for (const auto& [name, value] : d["creepsSpawnIntervals"].GetObject()) {
+        creepsSpawnIntervals[creepTypeFromString(name.GetString())] = value.GetFloat();
     }
 }
 
