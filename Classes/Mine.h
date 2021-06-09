@@ -23,7 +23,8 @@ public:
     void showFlyingSprite();
     void hideFlyingSprite();
     void flyTo(const cocos2d::Vec2& v);
-    
+
+    void returnToHUD();
     void detonate();
     const Sprite* getCrater() const;
     void setPosition(const cocos2d::Vec2& v) override;

@@ -28,7 +28,8 @@ GameScene::GameScene() :
 	state(GameState::Launched),
 	screenSize(Director::getInstance()->getWinSize()),
 	creeps(this),
-	drawNode(nullptr),
+	hudDrawNode(nullptr),
+	forbiddenRegionDrawNode(nullptr),
 	remoteMine(nullptr),
 	proximityMine(nullptr),
 	techies(nullptr),
@@ -63,6 +64,7 @@ bool GameScene::init() {
     createRemoteMine();
     createProximityMine();
     createHUD();
+    createForbiddenRegionDrawNode();
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -105,13 +107,21 @@ void GameScene::createHUD() {
     healthLabel->enableOutline(Color4B::BLACK, 3);
     addChild(healthLabel, 1);
 
-    drawNode = DrawNode::create();
-    addChild(drawNode, 1);
-    drawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, GRAY);
-    drawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size,
+    hudDrawNode = DrawNode::create();
+    hudDrawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, GRAY);
+    hudDrawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size,
         Color4F::WHITE);
-    drawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, GRAY);
-    drawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
+    hudDrawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, GRAY);
+    hudDrawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
+    addChild(hudDrawNode, 1);
+}
+
+void GameScene::createForbiddenRegionDrawNode() {
+    forbiddenRegionDrawNode = DrawNode::create();
+    const auto radius = techies->getBoundingBox().getMaxY();
+    forbiddenRegionDrawNode->drawSolidCircle(Vec2(screenSize.width / 2, 0), radius, 0, 30, 1, 1, Color4F(1.0f, 0.0f, 0.0f, 0.25f));
+    forbiddenRegionDrawNode->setVisible(false);
+    addChild(forbiddenRegionDrawNode, 0);
 }
 
 void GameScene::createLabels() {
@@ -241,6 +251,7 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
                 const auto touchLocation = touch->getLocation();
                 for (const auto mine : mines) {
                     if (mine->getBoundingBox().containsPoint(touchLocation) && !mine->isPlanted()) {
+                        forbiddenRegionDrawNode->setVisible(true);
                         mine->setTouch(touch);
                         mine->setOpacity(128);
                         mine->setScale(0.25f);
@@ -274,25 +285,39 @@ void GameScene::keepMineInsideScreen(Mine* mine, Point& nextPosition) const {
 }
 
 void GameScene::onTouchMoved(Touch* touch, Event* event) {
-    if (touch) {
-        auto touchLocation = touch->getLocation();
-        for (const auto mine : mines) {
-            if (mine->getTouch() && mine->getTouch() == touch) {
-                keepMineInsideScreen(proximityMine, touchLocation);
-                mine->setNextPosition(touchLocation);
+    auto touchLocation = touch->getLocation();
+    for (const auto mine : mines) {
+        if (mine->getTouch() && mine->getTouch() == touch) {
+            keepMineInsideScreen(proximityMine, touchLocation);
+            mine->setNextPosition(touchLocation);
+            const auto radius = techies->getBoundingBox().getMaxY();
+            const auto v = touchLocation - Vec2(screenSize.width / 2, 0);
+            if (v.length() <= radius) {
+                mine->setColor(Color3B::BLACK);
+            } else {
+                mine->setColor(Color3B::WHITE);
             }
         }
     }
 }
 
 void GameScene::onTouchEnded(Touch* touch, Event* event) {
-    if (touch) {
-	    auto touchLocation = touch->getLocation();
-        for (const auto mine : mines) {
-            if (mine->getTouch() && mine->getTouch() == touch) {
-                keepMineInsideScreen(proximityMine, touchLocation);
+    auto touchLocation = touch->getLocation();
+    for (const auto mine : mines) {
+        if (mine->getTouch() && mine->getTouch() == touch) {
+            keepMineInsideScreen(proximityMine, touchLocation);
+            const auto radius = techies->getBoundingBox().getMaxY();
+            const auto v = touchLocation - Vec2(screenSize.width / 2, 0);
+            if (v.length() <= radius) {
+                mine->setColor(Color3B::WHITE);
+                mine->returnToHUD();
+                SimpleAudioEngine::getInstance()->playEffect("Mine_Error.mp3");
+            } else {
                 techies->plantMine(mine, touchLocation);
+                SimpleAudioEngine::getInstance()->playEffect("Mine_Spawn.mp3");
             }
+            mine->setTouch(nullptr);
+            forbiddenRegionDrawNode->setVisible(false);
         }
     }
 }

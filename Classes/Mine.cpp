@@ -57,6 +57,13 @@ void Mine::flyTo(const Vec2& v) {
     );
 }
 
+void Mine::returnToHUD() {
+    setPosition(originalPosition);
+    setScale(0.30f);
+    state = State::Created;
+    setOpacity(255);
+}
+
 void Mine::detonate() {
     SimpleAudioEngine::getInstance()->playEffect("Mine_Detonate.mp3");
     
@@ -75,9 +82,7 @@ void Mine::detonate() {
             nullptr
         )
     );
-    setPosition(originalPosition);
-    setScale(0.30f);
-    state = State::Created;
+    returnToHUD();
 }
 
 const Sprite* Mine::getCrater() const {

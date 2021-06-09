@@ -34,7 +34,8 @@ private:
     Creeps creeps;
     std::vector<Creep*> runningCreeps;
     
-    cocos2d::DrawNode* drawNode;
+    cocos2d::DrawNode* hudDrawNode;
+    cocos2d::DrawNode* forbiddenRegionDrawNode;
 
     Mine* remoteMine;
     Mine* proximityMine;
@@ -63,6 +64,7 @@ private:
     
     void createBackground();
     void createHUD();
+    void createForbiddenRegionDrawNode();
     void createLabels();
 
     void readConfig();

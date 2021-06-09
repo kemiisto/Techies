@@ -54,12 +54,7 @@ void Techies::plantMine(Mine* mine, const cocos2d::Vec2& location) {
             nullptr
         )
     );
-
-    mine->flyTo(v2);
-
-    SimpleAudioEngine::getInstance()->playEffect("Mine_Spawn.mp3");
-
-    mine->setTouch(nullptr);
+    mine->flyTo(v2);   
 }
 
 bool Techies::isIdle() const {
