@@ -2,7 +2,13 @@
 
 #include <fstream>
 
-#include "cocos/editor-support/cocostudio/SimpleAudioEngine.h"
+#include "CCDirector.h"
+#include "CCEventDispatcher.h"
+#include "CCEventListenerTouch.h"
+#include "CCFileUtils.h"
+#include "ccUTF8.h"
+#include "2d/CCLabel.h"
+#include "cocostudio/SimpleAudioEngine.h"
 #include "json/document.h"
 #include "json/istreamwrapper.h"
 

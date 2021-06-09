@@ -1,7 +1,7 @@
 #ifndef TECHIES_TECHIES_H
 #define TECHIES_TECHIES_H
 
-#include "cocos2d.h"
+#include "2d/CCSprite.h"
 
 class Mine;
 class Techies final : public cocos2d::Sprite {

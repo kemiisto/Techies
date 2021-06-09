@@ -1,6 +1,11 @@
 #include "Mine.h"
+
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "cocostudio/SimpleAudioEngine.h"
+
 #include "GameScene.h"
-#include "cocos/editor-support/cocostudio/SimpleAudioEngine.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;

@@ -1,7 +1,12 @@
 #include "Techies.h"
 
-#include "Mine.h"
+#include "ccUTF8.h"
+#include "2d/CCAnimation.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
 #include "cocostudio/SimpleAudioEngine.h"
+
+#include "Mine.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;

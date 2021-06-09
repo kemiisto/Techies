@@ -1,11 +1,16 @@
 #ifndef TECHIES_GAME_SCENE_H
 #define TECHIES_GAME_SCENE_H
 
-#include "cocos2d.h"
+#include "2d/CCScene.h"
+
 #include "Creep.h"
 #include "Creeps.h"
 #include "Mine.h"
 #include "Techies.h"
+
+namespace cocos2d {
+	class Label;
+}
 
 enum class GameState {
     Launched,

@@ -1,9 +1,16 @@
 #include "Creep.h"
 
 #include <utility>
+
+#include "ccUTF8.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
+
 #include "MeleeCreep.h"
 #include "RangedCreep.h"
 #include "SiegeCreep.h"
+
+
 
 using namespace cocos2d;
 

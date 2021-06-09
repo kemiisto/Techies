@@ -1,4 +1,9 @@
 #include "AppDelegate.h"
+
+#include "CCDirector.h"
+#include "CCGLView.h"
+#include "desktop/CCGLViewImpl-desktop.h"
+
 #include "GameScene.h"
 
 using namespace cocos2d;

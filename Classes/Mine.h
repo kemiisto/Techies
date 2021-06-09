@@ -1,7 +1,11 @@
 #ifndef TECHIES_MINE_H
 #define TECHIES_MINE_H
 
-#include "cocos2d.h"
+#include "2d/CCSprite.h"
+
+namespace cocos2d {
+	class ParticleSystemQuad;
+}
 
 enum class MineType {
     Proximity,

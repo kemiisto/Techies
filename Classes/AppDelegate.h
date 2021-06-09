@@ -1,7 +1,7 @@
 #ifndef  TECHIES_APP_DELEGATE_H
 #define  TECHIES_APP_DELEGATE_H
 
-#include "cocos2d.h"
+#include "CCApplication.h"
 
 class AppDelegate final : cocos2d::Application {
 public:

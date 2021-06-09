@@ -1,7 +1,11 @@
 #ifndef TECHIES_CREEP_H
 #define TECHIES_CREEP_H
 
-#include "cocos2d.h"
+#include "2d/CCSprite.h"
+
+namespace cocos2d {
+	class Animate;
+}
 
 struct AnimationsInfo {
     int alternativesCount;
