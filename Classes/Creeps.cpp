@@ -50,7 +50,7 @@ std::size_t Creeps::size() const {
 
 Creep* Creeps::get(const Creep::Type creepType) {
     auto& i = idx.at(creepType);
-    const auto creep = creeps.at(creepType).at(i);
+    auto creep = creeps.at(creepType).at(i);
     i++;
     if (i == creeps.at(creepType).size()) {
         i = 0;

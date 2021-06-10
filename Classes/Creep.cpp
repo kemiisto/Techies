@@ -64,7 +64,7 @@ void Creep::reset(const Size& screenSize, const std::function<void(Node*)>& func
     setPosition(Vec2(x, screenSize.height + getBoundingBox().size.height * 0.5f));
     setVisible(true);
 
-    const auto sequenceAction = Sequence::create(
+    auto sequenceAction = Sequence::create(
         MoveTo::create(15.0f, Vec2(x, 0.0f)),
         CallFuncN::create(func),
         nullptr

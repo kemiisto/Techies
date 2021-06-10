@@ -86,7 +86,7 @@ bool GameScene::init() {
 
 void GameScene::stop() {
     state = GameState::Over;
-    for (const auto creep : runningCreeps) {
+    for (auto creep : runningCreeps) {
         creep->stopAllActions();
     }
     proximityMine->stopAllActions();
@@ -255,7 +255,7 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
                     return false;
                 }
                 const auto touchLocation = touch->getLocation();
-                for (const auto mine : mines) {
+                for (auto mine : mines) {
                     if (mine->getBoundingBox().containsPoint(touchLocation) && !mine->isPlanted()) {
                         forbiddenRegionDrawNode->setVisible(true);
                         mine->setTouch(touch);
@@ -292,7 +292,7 @@ void GameScene::keepMineInsideScreen(Mine* mine, Point& nextPosition) const {
 
 void GameScene::onTouchMoved(Touch* touch, Event* event) {
     auto touchLocation = touch->getLocation();
-    for (const auto mine : mines) {
+    for (auto mine : mines) {
         if (mine->getTouch() && mine->getTouch() == touch) {
             keepMineInsideScreen(proximityMine, touchLocation);
             mine->setNextPosition(touchLocation);
@@ -309,7 +309,7 @@ void GameScene::onTouchMoved(Touch* touch, Event* event) {
 
 void GameScene::onTouchEnded(Touch* touch, Event* event) {
     auto touchLocation = touch->getLocation();
-    for (const auto mine : mines) {
+    for (auto mine : mines) {
         if (mine->getTouch() && mine->getTouch() == touch) {
             keepMineInsideScreen(proximityMine, touchLocation);
             const auto radius = techies->getBoundingBox().getMaxY();
@@ -329,7 +329,7 @@ void GameScene::onTouchEnded(Touch* touch, Event* event) {
 }
 
 void GameScene::creepReachedTheEnd(Node* node) {
-	const auto creep = dynamic_cast<Creep*>(node);
+	auto creep = dynamic_cast<Creep*>(node);
     runningCreeps.erase(std::remove(runningCreeps.begin(), runningCreeps.end(), creep));
     node->stopAllActions();
     changeHealth(-creep->damage());
