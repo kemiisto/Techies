@@ -16,7 +16,12 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace rapidjson;
 
-const Color4F GRAY(0.501f, 0.501f, 0.501f, 1.0f);
+const Color4F gray(0.501f, 0.501f, 0.501f, 1.0f);
+const Color4F transparentRed(1.0f, 0.0f, 0.0f, 0.25f);
+
+const std::string fontFilePath = "fonts/Pricedown.ttf";
+const float smallFontSize = 60;
+const float bigFontSize = smallFontSize * 3;
 
 Creep::Type creepTypeFromString(const std::string& s) {
 	if (s == "Melee") {
@@ -101,23 +106,22 @@ void GameScene::createBackground() {
 }
 
 void GameScene::createHUD() {
-    scoreLabel = Label::createWithTTF("SCORE: 0", "fonts/Pricedown.ttf", 60);
+    scoreLabel = Label::createWithTTF("SCORE: 0", fontFilePath, smallFontSize);
     scoreLabel->setAnchorPoint(Vec2(1.0, 0.0));
     scoreLabel->setPosition(Vec2(screenSize.width-10, 0));
     scoreLabel->enableOutline(Color4B::BLACK, 3);
     addChild(scoreLabel, 1);
     
-    healthLabel = Label::createWithTTF("HEALTH: 100%", "fonts/Pricedown.ttf", 60);
+    healthLabel = Label::createWithTTF("HEALTH: 100%", fontFilePath, smallFontSize);
     healthLabel->setAnchorPoint(Vec2(0.0, 0.0));
     healthLabel->setPosition(Vec2(10, 0));
     healthLabel->enableOutline(Color4B::BLACK, 3);
     addChild(healthLabel, 1);
 
     hudDrawNode = DrawNode::create();
-    hudDrawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, GRAY);
-    hudDrawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size,
-        Color4F::WHITE);
-    hudDrawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, GRAY);
+    hudDrawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, gray);
+    hudDrawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, Color4F::WHITE);
+    hudDrawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, gray);
     hudDrawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
     addChild(hudDrawNode, 1);
 }
@@ -125,18 +129,18 @@ void GameScene::createHUD() {
 void GameScene::createForbiddenRegionDrawNode() {
     forbiddenRegionDrawNode = DrawNode::create();
     const auto radius = techies->getBoundingBox().getMaxY();
-    forbiddenRegionDrawNode->drawSolidCircle(Vec2(screenSize.width / 2, 0), radius, 0, 30, 1, 1, Color4F(1.0f, 0.0f, 0.0f, 0.25f));
+    forbiddenRegionDrawNode->drawSolidCircle(Vec2(screenSize.width / 2, 0), radius, 0, 30, 1, 1, transparentRed);
     forbiddenRegionDrawNode->setVisible(false);
     addChild(forbiddenRegionDrawNode, 0);
 }
 
 void GameScene::createLabels() {
-    playLabel = Label::createWithTTF("PLAY!", "fonts/Pricedown.ttf", 180);
+    playLabel = Label::createWithTTF("PLAY!", fontFilePath, bigFontSize);
     playLabel->setPosition(screenSize/2);
     playLabel->enableOutline(Color4B::BLACK, 3);
     addChild(playLabel, 1);
     
-    gameOverLabel = Label::createWithTTF("WASTED", "fonts/Pricedown.ttf", 180);
+    gameOverLabel = Label::createWithTTF("WASTED", fontFilePath, bigFontSize);
     gameOverLabel->setPosition(screenSize/2);
     gameOverLabel->setColor(Color3B::RED);
     gameOverLabel->enableOutline(Color4B::BLACK, 3);
