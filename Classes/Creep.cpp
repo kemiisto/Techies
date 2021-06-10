@@ -10,8 +10,6 @@
 #include "RangedCreep.h"
 #include "SiegeCreep.h"
 
-
-
 using namespace cocos2d;
 
 float randomFloat(const float min, const float max) {
@@ -26,6 +24,33 @@ Creep::Creep(std::string folderName, AnimationsInfo animationsInfo) :
         animationsInfo(std::move(animationsInfo)),
         animateRun(nullptr),
         animateDie(nullptr) {
+}
+
+void Creep::createRunAnimation(int alternative) {
+    auto runAnimation = Animation::create();
+    for (int i = 0; i < animationsInfo.runCounts[alternative - 1]; ++i) {
+        auto name = StringUtils::format("%s/run/%02d/%02d.png", folderName.c_str(), alternative, i);
+        runAnimation->addSpriteFrameWithFile(name);
+    }
+    runAnimation->setDelayPerUnit(0.04f);
+    runAnimation->setRestoreOriginalFrame(true);
+    runAnimation->setLoops(-1);
+    animateRun = Animate::create(runAnimation);
+    animateRun->retain();
+}
+
+void Creep::createDieAnimation() {
+    int alternative = 1 + rand() % animationsInfo.alternativesCount;
+    auto deathAnimation = Animation::create();
+    for (int i = 0; i < animationsInfo.dieCounts[alternative - 1]; ++i) {
+        auto name = StringUtils::format("%s/die/%02d/%02d.png", folderName.c_str(), alternative, i);
+        deathAnimation->addSpriteFrameWithFile(name);
+    }
+    deathAnimation->setDelayPerUnit(0.025f);
+    deathAnimation->setRestoreOriginalFrame(false);
+    deathAnimation->setLoops(1);
+    animateDie = Animate::create(deathAnimation);
+    animateDie->retain();
 }
 
 Creep::~Creep() {
@@ -58,54 +83,4 @@ void Creep::die() {
             nullptr
         )
     );
-}
-
-Creep* Creep::create(const Type creepType) {
-    Creep* creep = nullptr;
-	
-    switch (creepType) {
-        case Type::Melee:
-            creep = new MeleeCreep();
-            break;
-        case Type::Ranged:
-            creep = new RangedCreep();
-            break;
-        case Type::Siege:
-            creep = new SiegeCreep();
-            break;
-    }
-
-    if (creep) {
-        int idx = 1 + rand() % creep->animationsInfo.alternativesCount;
-        if (creep->initWithFile(StringUtils::format("%s/run/%02d/%02d.png", creep->folderName.c_str(), idx, 0))) {
-            auto runAnimation = Animation::create();
-            for (int i = 0; i < creep->animationsInfo.runCounts[idx - 1]; ++i) {
-                auto name = StringUtils::format("%s/run/%02d/%02d.png", creep->folderName.c_str(), idx, i);
-                runAnimation->addSpriteFrameWithFile(name);
-            }
-            runAnimation->setDelayPerUnit(0.04f);
-            runAnimation->setRestoreOriginalFrame(true);
-            runAnimation->setLoops(-1);
-            creep->animateRun = Animate::create(runAnimation);
-            creep->animateRun->retain();
-
-            idx = 1 + rand() % creep->animationsInfo.alternativesCount;
-            auto deathAnimation = Animation::create();
-            for (int i = 0; i < creep->animationsInfo.dieCounts[idx - 1]; ++i) {
-                auto name = StringUtils::format("%s/die/%02d/%02d.png", creep->folderName.c_str(), idx, i);
-                deathAnimation->addSpriteFrameWithFile(name);
-            }
-            deathAnimation->setDelayPerUnit(0.025f);
-            deathAnimation->setRestoreOriginalFrame(false);
-            deathAnimation->setLoops(1);
-            creep->animateDie = Animate::create(deathAnimation);
-            creep->animateDie->retain();
-
-            creep->autorelease();
-            return creep;
-        }
-    }
-	
-    CC_SAFE_DELETE(creep);
-    return nullptr;
 }

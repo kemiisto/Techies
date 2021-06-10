@@ -12,8 +12,10 @@ struct AnimationsInfo {
     std::vector<int> runCounts;
     std::vector<int> dieCounts;
 };
+
 class Creep : public cocos2d::Sprite {
 public:
+    friend class CreepFactory;
     enum class Type {
         Melee,
         Ranged,
@@ -32,10 +34,11 @@ public:
     void die();
     virtual int value() const = 0;
     virtual int damage() const = 0;
-    static Creep* create(Type creepType);
 protected:
     Creep(std::string folderName, AnimationsInfo animationsInfo);
 private:
+    void createRunAnimation(int alternative);
+    void createDieAnimation();
     const std::string folderName;
     const AnimationsInfo animationsInfo;
     cocos2d::Animate* animateRun;

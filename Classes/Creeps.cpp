@@ -2,6 +2,7 @@
 
 #include <numeric>
 
+#include "CreepFactory.h"
 #include "GameScene.h"
 
 using namespace cocos2d;
@@ -59,7 +60,7 @@ Creep* Creeps::get(const Creep::Type creepType) {
 
 void Creeps::createCreeps(GameScene* scene, const Creep::Type& creepType) {
     for (std::size_t i = 0; i < maxCreepsOfType.at(creepType); ++i) {
-        auto creep = Creep::create(creepType);
+        auto creep = CreepFactory::create(creepType);
         creep->setVisible(false);
         creep->setScale(creepScale.at(creepType));
         creeps.at(creepType).push_back(creep);
