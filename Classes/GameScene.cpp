@@ -23,6 +23,8 @@ const std::string fontFilePath = "fonts/Pricedown.ttf";
 const float smallFontSize = 60;
 const float bigFontSize = smallFontSize * 3;
 
+const float iconSize = 125;
+
 Creep::Type creepTypeFromString(const std::string& s) {
 	if (s == "Melee") {
         return Creep::Type::Melee;
@@ -45,7 +47,7 @@ GameScene::GameScene() :
 	remoteMine(nullptr),
 	proximityMine(nullptr),
 	techies(nullptr),
-	creepsTimers{
+	creepsSpawnTimers{
 		{Creep::Type::Melee, 2.0f},
 		{Creep::Type::Ranged, 0.0f},
 		{Creep::Type::Siege, 0.0f}
@@ -118,6 +120,9 @@ void GameScene::createHUD() {
     healthLabel->enableOutline(Color4B::BLACK, 3);
     addChild(healthLabel, 1);
 
+    const auto remoteMineIconRect = Rect(screenSize.width / 2, 0, iconSize, iconSize);
+    const auto proximityMineIconRect = Rect(screenSize.width / 2 - iconSize, 0, iconSize, iconSize);
+
     hudDrawNode = DrawNode::create();
     hudDrawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, gray);
     hudDrawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, Color4F::WHITE);
@@ -163,14 +168,12 @@ void GameScene::createRemoteMine() {
     remoteMine = Mine::create(this, "fx_techies_remotebomb.png", Vec2(screenSize.width/2 + 60, 60));
     addChild(remoteMine, 2);
     mines.push_back(remoteMine);
-    remoteMineIconRect = Rect(screenSize.width/2, 0, 125, 125);
 }
 
 void GameScene::createProximityMine() {
     proximityMine = Mine::create(this, "fx_techiesfx_mine.png", Vec2(screenSize.width/2 - 60, 60));
     addChild(proximityMine, 2);
     mines.push_back(proximityMine);
-    proximityMineIconRect = Rect(screenSize.width/2 - 125, 0, 125, 125);
 }
 
 void GameScene::createTechies() {
@@ -223,7 +226,7 @@ void GameScene::update(float dt) {
         return;
     }
 
-    for (auto& [creepType, t] : creepsTimers) {
+    for (auto& [creepType, t] : creepsSpawnTimers) {
         t += dt;
     	if (t > creepsSpawnIntervals[creepType]) {
             t = 0;

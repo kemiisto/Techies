@@ -46,14 +46,10 @@ private:
     Mine* proximityMine;
     std::vector<Mine*> mines;
     
-    cocos2d::Rect remoteMineIconRect;
-    cocos2d::Rect proximityMineIconRect;
-    
     Techies* techies;
-    cocos2d::Vec2 techiesMidTop;
 
     std::map<Creep::Type, float> creepsSpawnIntervals;
-    std::map<Creep::Type, float> creepsTimers;
+    std::map<Creep::Type, float> creepsSpawnTimers;
     
     int score;
     int health;
