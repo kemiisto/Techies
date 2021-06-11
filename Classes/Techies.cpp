@@ -11,21 +11,23 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-Techies::Techies(const Vec2& position) : Sprite(),
+Techies::Techies() : Sprite(),
          minePlantingAnimation(nullptr),
          state(State::Idle) {
+    createMinePlantingAnimation();
 }
 
 Techies::~Techies() {
     minePlantingAnimation->release();
 }
 
-Techies* Techies::create(const Vec2& position) {
-    auto object = new Techies(position);
-    if (object->initWithFile("techies/00.png")) {
-        object->setAnchorPoint(Vec2(0.5, 0));
-        object->setPosition(position);
-        object->createMinePlantingAnimation();
+bool Techies::init() {
+    return initWithFile("techies/00.png");
+}
+
+Techies* Techies::create() {
+    auto object = new Techies();
+    if (object && object->init()) {
         object->autorelease();
         return object;
     }

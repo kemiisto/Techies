@@ -6,10 +6,12 @@
 class Mine;
 class Techies final : public cocos2d::Sprite {
 public:
-    static Techies* create(const cocos2d::Vec2& position);
+    static Techies* create();
     
     ~Techies() override;
 
+    bool init() override;
+	
     Techies(const Techies&) = delete;
     Techies& operator=(const Techies&) = delete;
 
@@ -26,7 +28,7 @@ private:
         PlantingMine
     };
 	
-    explicit Techies(const cocos2d::Vec2& position);
+    explicit Techies();
     cocos2d::Animation* minePlantingAnimation;
     State state;
 	

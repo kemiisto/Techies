@@ -174,7 +174,9 @@ void GameScene::createProximityMine() {
 }
 
 void GameScene::createTechies() {
-    techies = Techies::create(Vec2(screenSize.width / 2, 0));
+    techies = Techies::create();
+	techies->setAnchorPoint(Vec2(0.5, 0));
+	techies->setPosition(Vec2(screenSize.width / 2, 0));
     addChild(techies, 1);
 }
 
