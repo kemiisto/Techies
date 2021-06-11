@@ -6,10 +6,6 @@
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionInstant.h"
 
-#include "MeleeCreep.h"
-#include "RangedCreep.h"
-#include "SiegeCreep.h"
-
 using namespace cocos2d;
 
 float randomFloat(const float min, const float max) {
@@ -40,7 +36,7 @@ void Creep::createRunAnimation(int alternative) {
 }
 
 void Creep::createDieAnimation() {
-    int alternative = 1 + rand() % animationsInfo.alternativesCount;
+	const int alternative = 1 + rand() % animationsInfo.alternativesCount;
     auto deathAnimation = Animation::create();
     for (int i = 0; i < animationsInfo.dieCounts[alternative - 1]; ++i) {
         auto name = StringUtils::format("%s/die/%02d/%02d.png", folderName.c_str(), alternative, i);
@@ -58,7 +54,7 @@ Creep::~Creep() {
     CC_SAFE_RELEASE(animateDie);
 }
 
-void Creep::reset(const Size& screenSize, const std::function<void(Node*)>& func) {
+void Creep::spawn(const Size& screenSize, const std::function<void(Node*)>& func) {
     const float x = randomFloat(screenSize.width * 0.1f, screenSize.width * 0.9f);
     
     setPosition(Vec2(x, screenSize.height + getBoundingBox().size.height * 0.5f));

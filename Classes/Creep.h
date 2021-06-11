@@ -30,7 +30,7 @@ public:
     Creep(Creep&&) = delete;
     Creep& operator=(Creep&&) = delete;
     
-    void reset(const cocos2d::Size& screenSize, const std::function<void(Node*)>& func);
+    void spawn(const cocos2d::Size& screenSize, const std::function<void(Node*)>& func);
     void die();
     virtual int value() const = 0;
     virtual int damage() const = 0;

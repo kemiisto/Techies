@@ -190,7 +190,7 @@ void GameScene::spawnCreep(const Creep::Type& creepType) {
         return;
     }
     auto creep = creeps.get(creepType);
-    creep->reset(screenSize, std::bind(&GameScene::creepReachedTheEnd, this, creep));
+    creep->spawn(screenSize, std::bind(&GameScene::creepReachedTheEnd, this, creep));
     runningCreeps.push_back(creep);
 }
 
