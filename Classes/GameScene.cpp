@@ -58,7 +58,7 @@ GameScene::GameScene() :
 		healthLabel(nullptr),
 		playLabel(nullptr),
 		gameOverLabel(nullptr),
-		tryAgaingLabel(nullptr) {
+		tryAgainLabel(nullptr) {
 }
 
 Scene* GameScene::createScene() {
@@ -154,11 +154,11 @@ void GameScene::createLabels() {
     gameOverLabel->setVisible(false);
     addChild(gameOverLabel, 2);
 
-    tryAgaingLabel = Label::createWithTTF("TRY AGAIN!", fontFilePath, bigFontSize);
-    tryAgaingLabel->setPosition(Vec2(screenSize / 2) - Vec2(0, bigFontSize));
-    tryAgaingLabel->enableOutline(Color4B::BLACK, 3);
-    tryAgaingLabel->setVisible(false);
-    addChild(tryAgaingLabel, 2);
+    tryAgainLabel = Label::createWithTTF("TRY AGAIN!", fontFilePath, bigFontSize);
+    tryAgainLabel->setPosition(Vec2(screenSize / 2) - Vec2(0, bigFontSize));
+    tryAgainLabel->enableOutline(Color4B::BLACK, 3);
+    tryAgainLabel->setVisible(false);
+    addChild(tryAgainLabel, 2);
 }
 
 void GameScene::readConfig() {
@@ -361,7 +361,7 @@ void GameScene::changeHealth(const int value) {
         health = 0;
         stop();
         gameOverLabel->setVisible(true);
-        tryAgaingLabel->setVisible(true);
+        tryAgainLabel->setVisible(true);
         SimpleAudioEngine::getInstance()->playEffect("Wasted.mp3");
     }
     if (health > 100) {
