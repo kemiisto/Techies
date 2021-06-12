@@ -62,7 +62,7 @@ private:
     cocos2d::Label* healthLabel;
     cocos2d::Label* playLabel;
     cocos2d::Label* gameOverLabel;
-    cocos2d::Label* tryAgaingLabel;
+    cocos2d::Label* tryAgainLabel;
     
     void createBackground();
     void createHUD();
