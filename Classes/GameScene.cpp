@@ -39,25 +39,26 @@ Creep::Type creepTypeFromString(const std::string& s) {
 }
 
 GameScene::GameScene() :
-	state(GameState::Launched),
-	screenSize(Director::getInstance()->getWinSize()),
-	creeps(this),
-	hudDrawNode(nullptr),
-	forbiddenRegionDrawNode(nullptr),
-	remoteMine(nullptr),
-	proximityMine(nullptr),
-	techies(nullptr),
-	creepsSpawnTimers{
-		{Creep::Type::Melee, 2.0f},
-		{Creep::Type::Ranged, 0.0f},
-		{Creep::Type::Siege, 0.0f}
-	},
-	score(0),
-	health(100),
-	scoreLabel(nullptr),
-	healthLabel(nullptr),
-	playLabel(nullptr),
-	gameOverLabel(nullptr) {
+		state(GameState::Launched),
+		screenSize(Director::getInstance()->getWinSize()),
+		creeps(this),
+		hudDrawNode(nullptr),
+		forbiddenRegionDrawNode(nullptr),
+		remoteMine(nullptr),
+		proximityMine(nullptr),
+		techies(nullptr),
+		creepsSpawnTimers{
+			{Creep::Type::Melee, 2.0f},
+			{Creep::Type::Ranged, 0.0f},
+			{Creep::Type::Siege, 0.0f}
+		},
+		score(0),
+		health(100),
+		scoreLabel(nullptr),
+		healthLabel(nullptr),
+		playLabel(nullptr),
+		gameOverLabel(nullptr),
+		tryAgaingLabel(nullptr) {
 }
 
 Scene* GameScene::createScene() {
@@ -98,6 +99,7 @@ void GameScene::stop() {
     }
     proximityMine->stopAllActions();
     remoteMine->stopAllActions();
+    techies->stopAllActions();
     unscheduleUpdate();
 }
 
@@ -143,14 +145,20 @@ void GameScene::createLabels() {
     playLabel = Label::createWithTTF("PLAY!", fontFilePath, bigFontSize);
     playLabel->setPosition(screenSize/2);
     playLabel->enableOutline(Color4B::BLACK, 3);
-    addChild(playLabel, 1);
+    addChild(playLabel, 2);
     
     gameOverLabel = Label::createWithTTF("WASTED", fontFilePath, bigFontSize);
-    gameOverLabel->setPosition(screenSize/2);
+    gameOverLabel->setPosition(Vec2(screenSize/2) + Vec2(0, bigFontSize));
     gameOverLabel->setColor(Color3B::RED);
     gameOverLabel->enableOutline(Color4B::BLACK, 3);
     gameOverLabel->setVisible(false);
-    addChild(gameOverLabel, 1);
+    addChild(gameOverLabel, 2);
+
+    tryAgaingLabel = Label::createWithTTF("TRY AGAIN!", fontFilePath, bigFontSize);
+    tryAgaingLabel->setPosition(Vec2(screenSize / 2) - Vec2(0, bigFontSize));
+    tryAgaingLabel->enableOutline(Color4B::BLACK, 3);
+    tryAgaingLabel->setVisible(false);
+    addChild(tryAgaingLabel, 2);
 }
 
 void GameScene::readConfig() {
@@ -278,6 +286,8 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
             }
             break;
         case GameState::Over:
+            auto scene = GameScene::createScene();
+            Director::getInstance()->replaceScene(scene);
             break;
     }
     return true;
@@ -351,6 +361,7 @@ void GameScene::changeHealth(const int value) {
         health = 0;
         stop();
         gameOverLabel->setVisible(true);
+        tryAgaingLabel->setVisible(true);
         SimpleAudioEngine::getInstance()->playEffect("Wasted.mp3");
     }
     if (health > 100) {
