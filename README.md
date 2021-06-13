@@ -21,3 +21,8 @@ Build instructions:
   - `cmake .. -G "Visual Studio 16 2019" -AWin32`
   - Open Techies.sln, set Techies as startup project.
   - Open Techies project properties, go to C/C++ -> Language and change "C++ Language Standard" value to "ISO C++17 Standard (/std:c++17)".
+- macOS
+  - `cd proj.ios_mac/mac`
+  - `cmake ../.. -GXcode`
+  - Open Techies.xcodeproj, set Techies as active scheme.
+  - Open Techies project properties and change the following Build settings for Techies target: in Apple Clang - Custom Compiler Flags -> Other C++ Flags change all `-std=c++11` entries to `-std=c++17`.
