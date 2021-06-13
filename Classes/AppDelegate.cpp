@@ -2,7 +2,26 @@
 
 #include "CCDirector.h"
 #include "CCGLView.h"
-#include "desktop/CCGLViewImpl-desktop.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    #include "platform/ios/CCGLViewImpl-ios.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #include "platform/android/CCGLViewImpl-android.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "GameScene.h"
 
