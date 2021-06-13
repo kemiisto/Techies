@@ -14,3 +14,9 @@ proj.win32/cmake_install.cmake
 proj.win32/engine/*
 proj.win32/lib/*
 proj.win32/Techies.sln.DotSettings.user
+proj.ios_mac/mac/cmake_install.cmake
+proj.ios_mac/mac/CMakeCache.txt
+proj.ios_mac/mac/CMakeFiles/*
+proj.ios_mac/mac/CMakeScripts/*
+proj.ios_mac/mac/engine/*
+proj.ios_mac/mac/Techies.xcodeproj/*
