@@ -8,6 +8,8 @@
 #include "Mine.h"
 #include "Techies.h"
 
+class Ui;
+
 namespace cocos2d {
 	class Label;
 }
@@ -33,7 +35,7 @@ public:
     CREATE_FUNC(GameScene)
 private:
     GameState state;
-    cocos2d::Size screenSize;
+    const cocos2d::Size screenSize;
 
     Creeps creeps;
     std::vector<Creep*> runningCreeps;
@@ -64,9 +66,9 @@ private:
     cocos2d::Label* tryAgainLabel;
     
     void createBackground();
-    void createHUD();
+    void createHUD(const Ui& ui);
     void createForbiddenRegionDrawNode();
-    void createLabels();
+    void createLabels(const Ui& ui);
 
     void readConfig();
 

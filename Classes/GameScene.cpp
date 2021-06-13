@@ -12,16 +12,16 @@
 #include "json/document.h"
 #include "json/istreamwrapper.h"
 
+#include "Ui.h"
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace rapidjson;
 
+#define GET_VARIABLE_NAME(Variable) (#Variable)
+
 const Color4F gray(0.501f, 0.501f, 0.501f, 1.0f);
 const Color4F transparentRed(1.0f, 0.0f, 0.0f, 0.25f);
-
-const std::string fontFilePath = "fonts/Pricedown.ttf";
-const float smallFontSize = 60;
-const float bigFontSize = smallFontSize * 3;
 
 const float iconSize = 125;
 
@@ -67,13 +67,14 @@ bool GameScene::init() {
     }
 
     readConfig();
+    const auto ui = Ui("ui.json");
     
     createBackground();
-    createLabels();
+    createLabels(ui);
     createTechies();
     createRemoteMine();
     createProximityMine();
-    createHUD();
+    createHUD(ui);
     createForbiddenRegionDrawNode();
 
     auto listener = EventListenerTouchOneByOne::create();
@@ -105,17 +106,11 @@ void GameScene::createBackground() {
     addChild(sprite, 0);
 }
 
-void GameScene::createHUD() {
-    scoreLabel = Label::createWithTTF("SCORE: 0", fontFilePath, smallFontSize);
-    scoreLabel->setAnchorPoint(Vec2(1.0, 0.0));
-    scoreLabel->setPosition(Vec2(screenSize.width-10, 0));
-    scoreLabel->enableOutline(Color4B::BLACK, 3);
+void GameScene::createHUD(const Ui& ui) {
+    scoreLabel = ui.createLabel(GET_VARIABLE_NAME(scoreLabel), screenSize);
     addChild(scoreLabel, 1);
-    
-    healthLabel = Label::createWithTTF("HEALTH: 100%", fontFilePath, smallFontSize);
-    healthLabel->setAnchorPoint(Vec2(0.0, 0.0));
-    healthLabel->setPosition(Vec2(10, 0));
-    healthLabel->enableOutline(Color4B::BLACK, 3);
+
+    healthLabel = ui.createLabel(GET_VARIABLE_NAME(healthLabel), screenSize);
     addChild(healthLabel, 1);
 
     const auto remoteMineIconRect = Rect(screenSize.width / 2, 0, iconSize, iconSize);
@@ -137,22 +132,15 @@ void GameScene::createForbiddenRegionDrawNode() {
     addChild(forbiddenRegionDrawNode, 0);
 }
 
-void GameScene::createLabels() {
-    playLabel = Label::createWithTTF("PLAY!", fontFilePath, bigFontSize);
-    playLabel->setPosition(screenSize/2);
-    playLabel->enableOutline(Color4B::BLACK, 3);
+void GameScene::createLabels(const Ui& ui) {
+    playLabel = ui.createLabel(GET_VARIABLE_NAME(playLabel), screenSize);
     addChild(playLabel, 2);
     
-    gameOverLabel = Label::createWithTTF("WASTED", fontFilePath, bigFontSize);
-    gameOverLabel->setPosition(Vec2(screenSize/2) + Vec2(0, bigFontSize));
-    gameOverLabel->setColor(Color3B::RED);
-    gameOverLabel->enableOutline(Color4B::BLACK, 3);
+    gameOverLabel = ui.createLabel(GET_VARIABLE_NAME(gameOverLabel), screenSize);
     gameOverLabel->setVisible(false);
     addChild(gameOverLabel, 2);
 
-    tryAgainLabel = Label::createWithTTF("TRY AGAIN!", fontFilePath, bigFontSize);
-    tryAgainLabel->setPosition(Vec2(screenSize / 2) - Vec2(0, bigFontSize));
-    tryAgainLabel->enableOutline(Color4B::BLACK, 3);
+    tryAgainLabel = ui.createLabel(GET_VARIABLE_NAME(tryAgainLabel), screenSize);
     tryAgainLabel->setVisible(false);
     addChild(tryAgainLabel, 2);
 }

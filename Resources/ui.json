@@ -1,0 +1,62 @@
+{
+	"scoreLabel": {
+		"text": "SCORE: 0",
+		"fontFilePath": "fonts/Pricedown.ttf",
+		"fontSize": 60,
+		"anchorPoint": [1.0, 0.0],
+		"position": [-0.01, 0.0],
+		"color": [255, 255, 255],
+		"outline": {
+			"color": [0, 0, 0, 255],
+			"size": 3
+		}
+	},
+	"healthLabel": {
+		"text": "HEALTH: 100%",
+		"fontFilePath": "fonts/Pricedown.ttf",
+		"fontSize": 60,
+		"anchorPoint": [0.0, 0.0],
+		"position": [0.01, 0.0],
+		"color": [255, 255, 255],
+		"outline": {
+			"color": [0, 0, 0, 255],
+			"size": 3
+		}
+	},
+	"playLabel": {
+		"text": "PLAY!",
+		"fontFilePath": "fonts/Pricedown.ttf",
+		"fontSize": 180,
+		"anchorPoint": [0.5, 0.5],
+		"position": [0.5, 0.5],
+		"color": [255, 255, 255],
+		"outline": {
+			"color": [0, 0, 0, 255],
+			"size": 3
+		}
+	},
+	"gameOverLabel": {
+		"text": "WASTED",
+		"fontFilePath": "fonts/Pricedown.ttf",
+		"fontSize": 180,
+		"anchorPoint": [0.5, 0.5],
+		"position": [0.5, 0.6],
+		"color": [255, 0, 0],
+		"outline": {
+			"color": [0, 0, 0, 255],
+			"size": 3
+		}
+	},
+	"tryAgainLabel": {
+		"text": "TRY AGAIN!",
+		"fontFilePath": "fonts/Pricedown.ttf",
+		"fontSize": 180,
+		"anchorPoint": [0.5, 0.5],
+		"position": [0.5, 0.4],
+		"color": [255, 255, 255],
+		"outline": {
+			"color": [0, 0, 0, 255],
+			"size": 3
+		}
+	}
+}
