@@ -29,7 +29,6 @@ public:
     GameScene(GameScene&&) = delete;
     GameScene& operator=(GameScene&&) = delete;
     
-    static Scene* createScene();
     bool init() override;
     CREATE_FUNC(GameScene)
 private:

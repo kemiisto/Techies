@@ -61,10 +61,6 @@ GameScene::GameScene() :
 		tryAgainLabel(nullptr) {
 }
 
-Scene* GameScene::createScene() {
-    return create();
-}
-
 bool GameScene::init() {
     if (!Scene::init()) {
         return false;
@@ -286,7 +282,7 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
             }
             break;
         case GameState::Over:
-            auto scene = GameScene::createScene();
+            auto scene = GameScene::create();
             Director::getInstance()->replaceScene(scene);
             break;
     }

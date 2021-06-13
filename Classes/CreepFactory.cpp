@@ -12,13 +12,13 @@ Creep* CreepFactory::create(Creep::Type creepType) {
 
     switch (creepType) {
     case Creep::Type::Melee:
-        creep = new MeleeCreep();
+        creep = new (std::nothrow) MeleeCreep();
         break;
     case Creep::Type::Ranged:
-        creep = new RangedCreep();
+        creep = new (std::nothrow) RangedCreep();
         break;
     case Creep::Type::Siege:
-        creep = new SiegeCreep();
+        creep = new (std::nothrow) SiegeCreep();
         break;
     }
 

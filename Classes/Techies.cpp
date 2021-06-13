@@ -26,7 +26,7 @@ bool Techies::init() {
 }
 
 Techies* Techies::create() {
-    auto object = new Techies();
+    auto object = new (std::nothrow) Techies();
     if (object && object->init()) {
         object->autorelease();
         return object;

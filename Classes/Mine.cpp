@@ -22,8 +22,8 @@ Mine::Mine(const Vec2& position) : Sprite(),
 }
 
 Mine* Mine::create(GameScene* scene, const std::string& filename, const Vec2& position) {
-    auto object = new Mine(position);
-    if (object->initWithFile(filename)) {
+    auto object = new (std::nothrow) Mine(position);
+    if (object && object->initWithFile(filename)) {
         object->setPosition(position);
         object->setScale(0.30f);
         object->createCrater(scene);
