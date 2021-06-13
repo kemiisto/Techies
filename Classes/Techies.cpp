@@ -22,7 +22,7 @@ Techies::~Techies() {
 }
 
 bool Techies::init() {
-    return initWithFile("techies/00.png");
+    return initWithFile("hero_techies/00.png");
 }
 
 Techies* Techies::create() {
@@ -75,7 +75,7 @@ void Techies::setIdle() {
 void Techies::createMinePlantingAnimation() {
     minePlantingAnimation = Animation::create();
     for (int i = 0; i < 44; ++i) {
-        auto name = StringUtils::format("techies/%02d.png", i);
+        auto name = StringUtils::format("hero_techies/%02d.png", i);
         minePlantingAnimation->addSpriteFrameWithFile(name);
     }
     minePlantingAnimation->setDelayPerUnit(0.03f);
