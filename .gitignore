@@ -24,3 +24,9 @@ proj.ios_mac/mac/bin/*
 proj.ios_mac/mac/build/*
 proj.ios_mac/mac/lib/*
 proj.ios_mac/mac/Techies.build/*
+proj.ios_mac/ios/cmake_install.cmake
+proj.ios_mac/ios/CMakeCache.txt
+proj.ios_mac/ios/CMakeFiles/*
+proj.ios_mac/ios/CMakeScripts/*
+proj.ios_mac/ios/engine/*
+proj.ios_mac/ios/Techies.xcodeproj/*
