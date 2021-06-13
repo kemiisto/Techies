@@ -11,9 +11,9 @@
 
 [![](https://j.gifs.com/NOxDjm.gif)](https://youtu.be/m7RbxXWPCR0)
 
-Скачать v0.3 Beta:
-- [macOS](https://github.com/kemiisto/Techies/releases/download/v0.3-beta/Techies.macOS.zip)
-- [Windows](https://github.com/kemiisto/Techies/releases/download/v0.3-beta/Techies.Windows.zip)
+Скачать v0.3.1 Beta:
+- [macOS](https://github.com/kemiisto/Techies/releases/download/v0.3.1/Techies.macOS.zip)
+- [Windows](https://github.com/kemiisto/Techies/releases/download/v0.3.1/Techies.Windows.zip)
 
 Build instructions:
 - Windows
