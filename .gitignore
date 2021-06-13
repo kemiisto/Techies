@@ -34,3 +34,4 @@ proj.ios_mac/ios/bin/*
 proj.ios_mac/ios/build/*
 proj.ios_mac/ios/lib/*
 proj.ios_mac/ios/Techies.build/*
+proj.win32/MinSizeRel/*
