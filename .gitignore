@@ -20,3 +20,7 @@ proj.ios_mac/mac/CMakeFiles/*
 proj.ios_mac/mac/CMakeScripts/*
 proj.ios_mac/mac/engine/*
 proj.ios_mac/mac/Techies.xcodeproj/*
+proj.ios_mac/mac/bin/*
+proj.ios_mac/mac/build/*
+proj.ios_mac/mac/lib/*
+proj.ios_mac/mac/Techies.build/*
