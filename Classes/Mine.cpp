@@ -160,6 +160,14 @@ void Mine::setTouch(Touch* t) {
     touch = t;
 }
 
+void Mine::stop() {
+    stopAllActions();
+    explosion->stopSystem();
+    smoke->stopSystem();
+    flyingSprite->stopAllActions();
+    crater->stopAllActions();
+}
+
 const Vec2& Mine::getNextPosition() const {
     return nextPosition;
 }

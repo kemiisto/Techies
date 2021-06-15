@@ -20,6 +20,8 @@ using namespace rapidjson;
 
 #define GET_VARIABLE_NAME(Variable) (#Variable)
 
+const auto gameOverDelay = 2.0f;
+
 const Color4F gray(0.501f, 0.501f, 0.501f, 1.0f);
 const Color4F transparentRed(1.0f, 0.0f, 0.0f, 0.25f);
 
@@ -74,6 +76,7 @@ GameScene::GameScene() :
 			{Creep::Type::Ranged, 0.0f},
 			{Creep::Type::Siege, 0.0f}
 		},
+		gameOverDelayTimer(0.0f),
 		score(0),
 		health(100),
 		scoreLabel(nullptr),
@@ -119,10 +122,10 @@ void GameScene::stop() {
     for (auto creep : runningCreeps) {
         creep->stopAllActions();
     }
-    proximityMine->stopAllActions();
-    remoteMine->stopAllActions();
+    proximityMine->stop();
+    remoteMine->stop();
     techies->stopAllActions();
-    unscheduleUpdate();
+    //unscheduleUpdate();
 }
 
 void GameScene::createBackground() {
@@ -228,6 +231,10 @@ void GameScene::checkCollisionsWithProximityMine() {
 }
 
 void GameScene::update(float dt) {
+	if (state == GameState::Over) {
+        gameOverDelayTimer += dt;
+	}
+	
     if (state != GameState::Running) {
         return;
     }
@@ -283,8 +290,10 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
             }
             break;
         case GameState::Over:
-            auto scene = GameScene::create();
-            Director::getInstance()->replaceScene(scene);
+            if (gameOverDelayTimer >= gameOverDelay) {
+                auto scene = GameScene::create();
+                Director::getInstance()->replaceScene(scene);
+            }
             break;
     }
     return true;

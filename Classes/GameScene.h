@@ -51,6 +51,7 @@ private:
 
     std::map<Creep::Type, float> creepSpawnInterval;
     std::map<Creep::Type, float> creepSpawnTimer;
+    float gameOverDelayTimer;
     
     int score;
     int health;

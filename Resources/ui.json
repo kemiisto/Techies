@@ -48,7 +48,7 @@
 		}
 	},
 	"tryAgainLabel": {
-		"text": "TRY AGAIN!",
+		"text": "TAP TO TRY AGAIN!",
 		"fontFilePath": "fonts/Pricedown.ttf",
 		"fontSize": 180,
 		"anchorPoint": [0.5, 0.5],

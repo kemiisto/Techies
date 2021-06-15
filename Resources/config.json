@@ -10,8 +10,8 @@
 		"Siege": 3
 	},
 	"creepDamage": {
-		"Melee": 5,
-		"Ranged": 10,
-		"Siege": 15
+		"Melee": 10,
+		"Ranged": 15,
+		"Siege": 20
 	}
 }

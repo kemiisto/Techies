@@ -46,6 +46,8 @@ public:
     const cocos2d::Touch* getTouch() const;
     void setTouch(cocos2d::Touch* t);
 
+    void stop();
+
     static Mine* create(GameScene* scene, const std::string& filename, const cocos2d::Vec2& position);
 private:
     enum class State {
