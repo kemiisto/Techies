@@ -38,16 +38,38 @@ Creep::Type creepTypeFromString(const std::string& s) {
 	throw std::invalid_argument("Unknown creep type!");
 }
 
+void readConfig(
+		std::map<Creep::Type, float>& creepSpawnInterval,
+		std::map<Creep::Type, int>& creepValue,
+		std::map<Creep::Type, float>& creepDamage) {
+    std::ifstream ifs(FileUtils::getInstance()->fullPathForFilename("config.json"));
+    IStreamWrapper isw(ifs);
+    Document d;
+    d.ParseStream(isw);
+
+    for (const auto& [name, value] : d["creepSpawnInterval"].GetObject()) {
+        creepSpawnInterval[creepTypeFromString(name.GetString())] = value.GetFloat();
+    }
+
+    for (const auto& [name, value] : d["creepValue"].GetObject()) {
+        creepValue[creepTypeFromString(name.GetString())] = value.GetInt();
+    }
+
+
+    for (const auto& [name, value] : d["creepDamage"].GetObject()) {
+        creepDamage[creepTypeFromString(name.GetString())] = value.GetFloat();
+    }
+}
+
 GameScene::GameScene() :
 		state(GameState::Launched),
 		screenSize(Director::getInstance()->getWinSize()),
-		creeps(this),
 		hudDrawNode(nullptr),
 		forbiddenRegionDrawNode(nullptr),
 		remoteMine(nullptr),
 		proximityMine(nullptr),
 		techies(nullptr),
-		creepsSpawnTimers{
+		creepSpawnTimer{
 			{Creep::Type::Melee, 2.0f},
 			{Creep::Type::Ranged, 0.0f},
 			{Creep::Type::Siege, 0.0f}
@@ -66,9 +88,12 @@ bool GameScene::init() {
         return false;
     }
 
-    readConfig();
+    std::map<Creep::Type, int> creepValue;
+    std::map<Creep::Type, float> creepDamage;
+    readConfig(creepSpawnInterval, creepValue, creepDamage);
+    creeps = std::make_unique<Creeps>(this, creepValue, creepDamage);
+	
     const auto ui = Ui("ui.json");
-    
     createBackground();
     createLabels(ui);
     createTechies();
@@ -145,17 +170,6 @@ void GameScene::createLabels(const Ui& ui) {
     addChild(tryAgainLabel, 2);
 }
 
-void GameScene::readConfig() {
-    std::ifstream ifs(FileUtils::getInstance()->fullPathForFilename("config.json"));
-    IStreamWrapper isw(ifs);
-    Document d;
-    d.ParseStream(isw);
-
-    for (const auto& [name, value] : d["creepsSpawnIntervals"].GetObject()) {
-        creepsSpawnIntervals[creepTypeFromString(name.GetString())] = value.GetFloat();
-    }
-}
-
 void GameScene::createRemoteMine() {
     remoteMine = Mine::create(this, "fx_techies_remotebomb.png", Vec2(screenSize.width/2 + 60, 60));
     addChild(remoteMine, 2);
@@ -181,20 +195,20 @@ void GameScene::updateHUD() {
 }
 
 void GameScene::spawnCreep(const Creep::Type& creepType) {
-    if (runningCreeps.size() >= creeps.size()) {
+    if (runningCreeps.size() >= creeps->size()) {
         return;
     }
-    auto creep = creeps.get(creepType);
+    auto creep = creeps->get(creepType);
     creep->spawn(screenSize, std::bind(&GameScene::creepReachedTheEnd, this, creep));
     runningCreeps.push_back(creep);
 }
 
 void GameScene::checkCollisionsWithCrater(const Sprite* const crater) {
     for (auto it = runningCreeps.begin(); it != runningCreeps.end();) {
-        auto object = *it;
-        if (crater->getBoundingBox().intersectsRect(object->getBoundingBox())) {
-            object->die();
-            score += object->value();
+        auto creep = *it;
+        if (crater->getBoundingBox().intersectsRect(creep->getBoundingBox())) {
+            creep->die();
+            score += creep->getValue();
             it = runningCreeps.erase(it);
         } else {
             ++it;
@@ -218,9 +232,9 @@ void GameScene::update(float dt) {
         return;
     }
 
-    for (auto& [creepType, t] : creepsSpawnTimers) {
+    for (auto& [creepType, t] : creepSpawnTimer) {
         t += dt;
-    	if (t > creepsSpawnIntervals[creepType]) {
+    	if (t > creepSpawnInterval[creepType]) {
             t = 0;
             spawnCreep(creepType);
     	}
@@ -335,7 +349,7 @@ void GameScene::creepReachedTheEnd(Node* node) {
 	auto creep = dynamic_cast<Creep*>(node);
     runningCreeps.erase(std::remove(runningCreeps.begin(), runningCreeps.end(), creep));
     node->stopAllActions();
-    changeHealth(-creep->damage());
+    changeHealth(-creep->getDamage());
     node->setVisible(false);
 }
 

@@ -5,7 +5,7 @@
 
 class CreepFactory {
 public:
-	static Creep* create(Creep::Type creepType);
+	static Creep* create(Creep::Type creepType, int value, int damage);
 };
 
 #endif // TECHIES_CREEP_FACTORY_H

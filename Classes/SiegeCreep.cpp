@@ -2,14 +2,7 @@
 
 using namespace cocos2d;
 
-SiegeCreep::SiegeCreep() :
-        Creep("creep_siege", {1, {49}, {51}}) {
+SiegeCreep::SiegeCreep(int value, int damage) :
+        Creep("creep_siege", {1, {49}, {51}}, value, damage) {
 }
 
-int SiegeCreep::value() const {
-    return 3;
-}
-
-int SiegeCreep::damage() const {
-    return 30;
-}

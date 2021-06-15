@@ -37,7 +37,7 @@ private:
     GameState state;
     const cocos2d::Size screenSize;
 
-    Creeps creeps;
+    std::unique_ptr<Creeps> creeps;
     std::vector<Creep*> runningCreeps;
     
     cocos2d::DrawNode* hudDrawNode;
@@ -49,8 +49,8 @@ private:
     
     Techies* techies;
 
-    std::map<Creep::Type, float> creepsSpawnIntervals;
-    std::map<Creep::Type, float> creepsSpawnTimers;
+    std::map<Creep::Type, float> creepSpawnInterval;
+    std::map<Creep::Type, float> creepSpawnTimer;
     
     int score;
     int health;
@@ -69,8 +69,6 @@ private:
     void createHUD(const Ui& ui);
     void createForbiddenRegionDrawNode();
     void createLabels(const Ui& ui);
-
-    void readConfig();
 
     void spawnCreep(const Creep::Type& creepType);
     

@@ -14,10 +14,12 @@ float randomFloat(const float min, const float max) {
     return dis(e);
 }
 
-Creep::Creep(std::string folderName, AnimationsInfo animationsInfo) :
+Creep::Creep(std::string folderName, AnimationsInfo animationsInfo, int value, int damage) :
         Sprite(),
         folderName(std::move(folderName)),
         animationsInfo(std::move(animationsInfo)),
+		value(value),
+		damage(damage),
         animateRun(nullptr),
         animateDie(nullptr) {
 }
@@ -79,4 +81,12 @@ void Creep::die() {
             nullptr
         )
     );
+}
+
+int Creep::getValue() const {
+    return value;
+}
+
+int Creep::getDamage() const {
+    return damage;
 }

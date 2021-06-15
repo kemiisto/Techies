@@ -5,11 +5,8 @@
 
 class RangedCreep final : public Creep {
     friend class CreepFactory;
-public:
-    int value() const override;
-    int damage() const override;
 private:
-    RangedCreep();
+    RangedCreep(int value, int damage);
 };
 
 #endif // TECHIES_RANGED_CREEP_H

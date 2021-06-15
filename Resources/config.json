@@ -1,7 +1,17 @@
 {
-	"creepsSpawnIntervals": {
+	"creepSpawnInterval": {
 		"Melee": 3.0,
 		"Ranged": 6.0,
 		"Siege": 9.0
+	},
+	"creepValue": {
+		"Melee": 1,
+		"Ranged": 2,
+		"Siege": 3
+	},
+	"creepDamage": {
+		"Melee": 5,
+		"Ranged": 10,
+		"Siege": 15
 	}
 }

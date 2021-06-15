@@ -32,15 +32,17 @@ public:
     
     void spawn(const cocos2d::Size& screenSize, const std::function<void(Node*)>& func);
     void die();
-    virtual int value() const = 0;
-    virtual int damage() const = 0;
+    int getValue() const;
+    int getDamage() const;
 protected:
-    Creep(std::string folderName, AnimationsInfo animationsInfo);
+    Creep(std::string folderName, AnimationsInfo animationsInfo, int value, int damage);
 private:
     void createRunAnimation(int alternative);
     void createDieAnimation();
     const std::string folderName;
     const AnimationsInfo animationsInfo;
+    const int value;
+    const int damage;
     cocos2d::Animate* animateRun;
     cocos2d::Animate* animateDie;
 };

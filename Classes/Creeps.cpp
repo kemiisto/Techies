@@ -19,7 +19,7 @@ const std::map<Creep::Type, float> creepScale = {
     {Creep::Type::Siege,  0.600f}
 };
 
-Creeps::Creeps(GameScene* scene) :
+Creeps::Creeps(GameScene* scene, const std::map<Creep::Type, int>& creepValue, const std::map<Creep::Type, float>& creepDamage) :
 	    creeps{
 	        {Creep::Type::Melee,  {} },
 	        {Creep::Type::Ranged, {} },
@@ -30,7 +30,9 @@ Creeps::Creeps(GameScene* scene) :
 	        {Creep::Type::Ranged, 0 },
 	        {Creep::Type::Siege,  0 }
 		},
-		maxCreeps(0) {
+		maxCreeps(0),
+		creepValue(creepValue),
+		creepDamage(creepDamage) {
     createCreeps(scene, Creep::Type::Melee);
     createCreeps(scene, Creep::Type::Ranged);
     createCreeps(scene, Creep::Type::Siege);
@@ -60,7 +62,7 @@ Creep* Creeps::get(const Creep::Type creepType) {
 
 void Creeps::createCreeps(GameScene* scene, const Creep::Type& creepType) {
     for (std::size_t i = 0; i < maxCreepsOfType.at(creepType); ++i) {
-        auto creep = CreepFactory::create(creepType);
+        auto creep = CreepFactory::create(creepType, creepValue.at(creepType), creepDamage.at(creepType));
         creep->setVisible(false);
         creep->setScale(creepScale.at(creepType));
         creeps.at(creepType).push_back(creep);

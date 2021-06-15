@@ -7,18 +7,18 @@
 
 using namespace cocos2d;
 
-Creep* CreepFactory::create(Creep::Type creepType) {
+Creep* CreepFactory::create(Creep::Type creepType, int value, int damage) {
     Creep* creep = nullptr;
 
     switch (creepType) {
     case Creep::Type::Melee:
-        creep = new (std::nothrow) MeleeCreep();
+        creep = new (std::nothrow) MeleeCreep(value, damage);
         break;
     case Creep::Type::Ranged:
-        creep = new (std::nothrow) RangedCreep();
+        creep = new (std::nothrow) RangedCreep(value, damage);
         break;
     case Creep::Type::Siege:
-        creep = new (std::nothrow) SiegeCreep();
+        creep = new (std::nothrow) SiegeCreep(value, damage);
         break;
     }
 

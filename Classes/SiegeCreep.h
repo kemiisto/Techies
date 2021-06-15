@@ -5,11 +5,8 @@
 
 class SiegeCreep final : public Creep {
     friend class CreepFactory;
-public:
-    int value() const override;
-    int damage() const override;
 private:
-    SiegeCreep();
+    SiegeCreep(int value, int damage);
 };
 
 #endif // TECHIES_SIEGE_CREEP_H

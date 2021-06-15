@@ -5,11 +5,8 @@
 
 class MeleeCreep final : public Creep {
     friend class CreepFactory;
-public:
-    int value() const override;
-    int damage() const override;
 private:
-    MeleeCreep();
+    MeleeCreep(int value, int damage);
 };
 
 
