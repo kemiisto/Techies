@@ -35,8 +35,6 @@ Techies* Techies::create() {
     return nullptr;
 }
 
-
-
 void Techies::plantMine(Mine* mine, const Vec2& location) {
     assert(state == State::Idle);
 	

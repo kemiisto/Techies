@@ -25,7 +25,6 @@ Mine* Mine::create(GameScene* scene, const std::string& filename, const Vec2& po
     auto object = new (std::nothrow) Mine(position);
     if (object && object->initWithFile(filename)) {
         object->setPosition(position);
-        object->setScale(0.30f);
         object->createCrater(scene);
         object->createFlyingSprite(scene);
         object->createExplosion(scene);
@@ -64,7 +63,6 @@ void Mine::flyTo(const Vec2& v) {
 
 void Mine::returnToHUD() {
     setPosition(originalPosition);
-    setScale(0.30f);
     state = State::Created;
     setOpacity(255);
 }
@@ -104,7 +102,6 @@ void Mine::createCrater(GameScene* scene) {
 
 void Mine::createFlyingSprite(GameScene* scene) {
     flyingSprite = createWithTexture(getTexture());
-    flyingSprite->setScale(0.25f);
     flyingSprite->setVisible(false);
     scene->addChild(flyingSprite);
 }

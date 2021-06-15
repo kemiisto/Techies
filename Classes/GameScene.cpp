@@ -275,7 +275,6 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event) {
                         forbiddenRegionDrawNode->setVisible(true);
                         mine->setTouch(touch);
                         mine->setOpacity(128);
-                        mine->setScale(0.25f);
                     }
                 }
                 if (remoteMine->getBoundingBox().containsPoint(touchLocation) && remoteMine->isPlanted()) {
