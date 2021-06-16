@@ -11,6 +11,10 @@
 class Ui;
 
 namespace cocos2d {
+	namespace ui {
+		class Button;
+	}
+
 	class Label;
 }
 
@@ -64,9 +68,10 @@ private:
     
     cocos2d::Label* scoreLabel;
     cocos2d::Label* healthLabel;
-    cocos2d::Label* playLabel;
     cocos2d::Label* gameOverLabel;
     cocos2d::Label* tryAgainLabel;
+
+    cocos2d::ui::Button* playButton = nullptr;
     
     void createBackground();
     void createHUD(const Ui& ui);

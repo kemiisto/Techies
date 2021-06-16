@@ -9,6 +9,7 @@
 #include "ccUTF8.h"
 #include "2d/CCLabel.h"
 #include "cocostudio/SimpleAudioEngine.h"
+#include "ui/CocosGUI.h"
 #include "json/document.h"
 #include "json/istreamwrapper.h"
 
@@ -82,7 +83,6 @@ GameScene::GameScene() :
 		health(100),
 		scoreLabel(nullptr),
 		healthLabel(nullptr),
-		playLabel(nullptr),
 		gameOverLabel(nullptr),
 		tryAgainLabel(nullptr) {
 }
@@ -150,8 +150,14 @@ void GameScene::createHUD(const Ui& ui) {
 }
 
 void GameScene::createLabels(const Ui& ui) {
-    playLabel = ui.createLabel(GET_VARIABLE_NAME(playLabel), screenSize);
-    addChild(playLabel, 2);
+    playButton = ui.createButton(GET_VARIABLE_NAME(playButton), screenSize);
+    playButton->addTouchEventListener([this](Ref* sender, ui::Widget::TouchEventType type) {
+	    if (type == ui::Widget::TouchEventType::ENDED) {
+            playButton->setVisible(false);
+            state = GameState::Running;
+	    }
+    });
+    addChild(playButton, 2);
     
     gameOverLabel = ui.createLabel(GET_VARIABLE_NAME(gameOverLabel), screenSize);
     gameOverLabel->setVisible(false);
@@ -255,26 +261,22 @@ void GameScene::update(float dt) {
 }
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event) {
+    assert(touch);
+
+    const auto touchLocation = touch->getLocation();
     switch (state) {
-        case GameState::Launched:
-            playLabel->setVisible(false);
-            state = GameState::Running;
-            break;
         case GameState::Running:
-            if (touch) {
-                if (!techies->isIdle() || proximityMine->isFlying() || remoteMine->isFlying()) {
-                    return false;
+            if (!techies->isIdle() || proximityMine->isFlying() || remoteMine->isFlying()) {
+                return false;
+            }
+            for (auto mine : mines) {
+                if (mine->getBoundingBox().containsPoint(touchLocation) && !mine->isPlanted()) {
+                    mine->setTouch(touch);
+                    mine->setOpacity(128);
                 }
-                const auto touchLocation = touch->getLocation();
-                for (auto mine : mines) {
-                    if (mine->getBoundingBox().containsPoint(touchLocation) && !mine->isPlanted()) {
-                        mine->setTouch(touch);
-                        mine->setOpacity(128);
-                    }
-                }
-                if (remoteMine->getBoundingBox().containsPoint(touchLocation) && remoteMine->isPlanted()) {
-                    remoteMine->detonate();
-                }
+            }
+            if (remoteMine->getBoundingBox().containsPoint(touchLocation) && remoteMine->isPlanted()) {
+                remoteMine->detonate();
             }
             break;
         case GameState::Over:
