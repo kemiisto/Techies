@@ -54,6 +54,17 @@ Ui::Ui(const std::string& uiFileName) {
     doc.ParseStream(isw);
 }
 
+cocos2d::Sprite* Ui::createSprite(const std::string& name, const cocos2d::Size& screenSize) const {
+    const auto& desc = doc[name];
+    const auto& filename = desc["filename"].GetString();
+
+    auto sprite = Sprite::create(filename);
+    setAnchorPoint(desc, sprite);
+    setPosition(desc, sprite, screenSize);
+	
+    return sprite;
+}
+
 Label* Ui::createLabel(const std::string& name, const cocos2d::Size& screenSize) const {
     const auto& desc = doc[name];
     const auto& text = desc["text"].GetString();
@@ -65,6 +76,7 @@ Label* Ui::createLabel(const std::string& name, const cocos2d::Size& screenSize)
     setPosition(desc, label, screenSize);
     setColor(desc, label);
     enableOutline(desc, label);
+	
     return label;
 }
 
@@ -75,5 +87,6 @@ cocos2d::ui::Button* Ui::createButton(const std::string& name, const cocos2d::Si
     auto button = ui::Button::create(normalImage);
     setAnchorPoint(desc, button);
     setPosition(desc, button, screenSize);
+	
     return button;
 }

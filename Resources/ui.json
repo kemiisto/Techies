@@ -1,10 +1,10 @@
 {
 	"scoreLabel": {
-		"text": "SCORE: 0",
+		"text": "0",
 		"fontFilePath": "fonts/Pricedown.ttf",
-		"fontSize": 60,
-		"anchorPoint": [1.0, 0.0],
-		"position": [-0.01, 0.0],
+		"fontSize": 80,
+		"anchorPoint": [1.0, 1.0],
+		"position": [-0.075, 1.0],
 		"color": [255, 255, 255],
 		"outline": {
 			"color": [0, 0, 0, 255],
@@ -12,11 +12,11 @@
 		}
 	},
 	"healthLabel": {
-		"text": "HEALTH: 100%",
+		"text": "100",
 		"fontFilePath": "fonts/Pricedown.ttf",
-		"fontSize": 60,
-		"anchorPoint": [0.0, 0.0],
-		"position": [0.01, 0.0],
+		"fontSize": 80,
+		"anchorPoint": [0.0, 1.0],
+		"position": [0.075, 1.0],
 		"color": [255, 255, 255],
 		"outline": {
 			"color": [0, 0, 0, 255],
@@ -28,10 +28,20 @@
 		"position": [0.5, 0.5],
 		"normalImage": "buttons/PlayNormal.png"
 	},
+	"bottomLeftHudSprite": {
+		"anchorPoint": [0.5, 0.5],
+		"position": [0.4, 0.05],
+		"filename": "center_hud.png"
+	},
+	"bottomRightHudSprite": {
+		"anchorPoint": [0.5, 0.5],
+		"position": [0.6, 0.05],
+		"filename": "center_hud.png"
+	},
 	"gameOverLabel": {
 		"text": "WASTED",
 		"fontFilePath": "fonts/Pricedown.ttf",
-		"fontSize": 180,
+		"fontSize": 120,
 		"anchorPoint": [0.5, 0.5],
 		"position": [0.5, 0.6],
 		"color": [255, 0, 0],
@@ -43,7 +53,7 @@
 	"tryAgainLabel": {
 		"text": "TAP TO TRY AGAIN!",
 		"fontFilePath": "fonts/Pricedown.ttf",
-		"fontSize": 180,
+		"fontSize": 120,
 		"anchorPoint": [0.5, 0.5],
 		"position": [0.5, 0.4],
 		"color": [255, 255, 255],

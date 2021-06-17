@@ -14,6 +14,7 @@ namespace cocos2d {
 class Ui {
 public:
 	Ui(const std::string& uiFileName);
+	cocos2d::Sprite* createSprite(const std::string& name, const cocos2d::Size& screenSize) const;
 	cocos2d::Label* createLabel(const std::string& name, const cocos2d::Size& screenSize) const;
 	cocos2d::ui::Button* createButton(const std::string& name, const cocos2d::Size& screenSize) const;
 private:

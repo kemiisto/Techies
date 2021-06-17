@@ -43,15 +43,10 @@ private:
 
     std::unique_ptr<Creeps> creeps;
     std::vector<Creep*> runningCreeps;
-    
-    cocos2d::DrawNode* hudDrawNode;
 
     Mine* remoteMine;
     Mine* proximityMine;
     std::vector<Mine*> mines;
-
-    const cocos2d::Rect remoteMineIconRect;
-    const cocos2d::Rect proximityMineIconRect;
     
     Techies* techies;
 
@@ -65,26 +60,33 @@ private:
     void stop();
     
     void changeHealth(int value);
-    
+
     cocos2d::Label* scoreLabel;
     cocos2d::Label* healthLabel;
     cocos2d::Label* gameOverLabel;
     cocos2d::Label* tryAgainLabel;
 
     cocos2d::ui::Button* playButton = nullptr;
+
+    cocos2d::Sprite* topLeftHud = nullptr;
+    cocos2d::Sprite* bottomLeftHudSprite = nullptr;
+    cocos2d::Sprite* bottomRightHudSprite = nullptr;
+    cocos2d::Sprite* topRightHud = nullptr;
+
+    bool intersectsHud(cocos2d::Sprite* sprite) const;
     
     void createBackground();
-    void createHUD(const Ui& ui);
+    void createHud(const Ui& ui);
     void createLabels(const Ui& ui);
 
     void spawnCreep(const Creep::Type& creepType);
     
-    void createRemoteMine();
-    void createProximityMine();
+    void createRemoteMine(const Ui& ui);
+    void createProximityMine(const Ui& ui);
 
     void createTechies();
     
-    void updateHUD();
+    void updateHud();
     
     void checkCollisionsWithCrater(const cocos2d::Sprite* crater);
     void checkCollisionsWithProximityMine();

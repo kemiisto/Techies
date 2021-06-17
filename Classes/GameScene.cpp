@@ -67,11 +67,8 @@ void readConfig(
 GameScene::GameScene() :
 		state(GameState::Launched),
 		screenSize(Director::getInstance()->getWinSize()),
-		hudDrawNode(nullptr),
 		remoteMine(nullptr),
 		proximityMine(nullptr),
-		remoteMineIconRect(screenSize.width / 2, 0, iconSize, iconSize),
-		proximityMineIconRect(screenSize.width / 2 - iconSize, 0, iconSize, iconSize),
 		techies(nullptr),
 		creepSpawnTimer{
 			{Creep::Type::Melee, 2.0f},
@@ -101,9 +98,9 @@ bool GameScene::init() {
     createBackground();
     createLabels(ui);
     createTechies();
-    createRemoteMine();
-    createProximityMine();
-    createHUD(ui);
+    createHud(ui);
+    createRemoteMine(ui);
+    createProximityMine(ui);
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -128,25 +125,51 @@ void GameScene::stop() {
     //unscheduleUpdate();
 }
 
+bool GameScene::intersectsHud(cocos2d::Sprite* sprite) const {
+    const auto& mineBoundingBox = sprite->getBoundingBox();
+    return
+		mineBoundingBox.intersectsRect(topLeftHud->getBoundingBox()) ||
+			mineBoundingBox.intersectsRect(bottomLeftHudSprite->getBoundingBox()) ||
+				mineBoundingBox.intersectsRect(bottomRightHudSprite->getBoundingBox()) ||
+					mineBoundingBox.intersectsRect(topRightHud->getBoundingBox());
+}
+
 void GameScene::createBackground() {
     auto sprite = Sprite::create("Snow.jpg");
     sprite->setPosition(screenSize/2);
     addChild(sprite, 0);
 }
 
-void GameScene::createHUD(const Ui& ui) {
-    scoreLabel = ui.createLabel(GET_VARIABLE_NAME(scoreLabel), screenSize);
-    addChild(scoreLabel, 1);
+void GameScene::createHud(const Ui& ui) {
+    bottomLeftHudSprite = ui.createSprite(GET_VARIABLE_NAME(bottomLeftHudSprite), screenSize);
+    addChild(bottomLeftHudSprite, 1);
 
+    bottomRightHudSprite = ui.createSprite(GET_VARIABLE_NAME(bottomRightHudSprite), screenSize);
+    addChild(bottomRightHudSprite, 1);
+
+	topLeftHud = Sprite::create("left_hud.png");
+    topLeftHud->setAnchorPoint(Vec2(0.35, 0.5));
+    topLeftHud->setPosition(Vec2(0, screenSize.height));
+    addChild(topLeftHud, 1);
+
+    auto heart = Sprite::create("heart.png");
+    heart->setPosition(50, screenSize.height - 50);
+    addChild(heart, 1);
+    
     healthLabel = ui.createLabel(GET_VARIABLE_NAME(healthLabel), screenSize);
     addChild(healthLabel, 1);
 
-    hudDrawNode = DrawNode::create();
-    hudDrawNode->drawSolidRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, gray);
-    hudDrawNode->drawRect(proximityMineIconRect.origin, proximityMineIconRect.origin + proximityMineIconRect.size, Color4F::WHITE);
-    hudDrawNode->drawSolidRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, gray);
-    hudDrawNode->drawRect(remoteMineIconRect.origin, remoteMineIconRect.origin + remoteMineIconRect.size, Color4F::WHITE);
-    addChild(hudDrawNode, 1);
+    topRightHud = Sprite::create("right_hud.png");
+    topRightHud->setAnchorPoint(Vec2(0.65, 0.5));
+    topRightHud->setPosition(Vec2(screenSize.width, screenSize.height));
+    addChild(topRightHud, 1);
+
+    auto coin = Sprite::create("coin.png");
+    coin->setPosition(screenSize.width - 50, screenSize.height - 50);
+    addChild(coin, 1);
+
+    scoreLabel = ui.createLabel(GET_VARIABLE_NAME(scoreLabel), screenSize);
+    addChild(scoreLabel, 1);
 }
 
 void GameScene::createLabels(const Ui& ui) {
@@ -168,14 +191,14 @@ void GameScene::createLabels(const Ui& ui) {
     addChild(tryAgainLabel, 2);
 }
 
-void GameScene::createRemoteMine() {
-    remoteMine = Mine::create(this, "fx_techies_remotebomb.png", Vec2(screenSize.width/2 + 60, 60));
+void GameScene::createRemoteMine(const Ui& ui) {
+    remoteMine = Mine::create(this, "fx_techies_remotebomb.png", bottomRightHudSprite->getPosition());
     addChild(remoteMine, 2);
     mines.push_back(remoteMine);
 }
 
-void GameScene::createProximityMine() {
-    proximityMine = Mine::create(this, "fx_techiesfx_mine.png", Vec2(screenSize.width/2 - 60, 60));
+void GameScene::createProximityMine(const Ui& ui) {
+    proximityMine = Mine::create(this, "fx_techiesfx_mine.png", bottomLeftHudSprite->getPosition());
     addChild(proximityMine, 2);
     mines.push_back(proximityMine);
 }
@@ -187,9 +210,9 @@ void GameScene::createTechies() {
     addChild(techies, 1);
 }
 
-void GameScene::updateHUD() {
-    scoreLabel->setString(StringUtils::format("SCORE: %d", score));
-    healthLabel->setString(StringUtils::format("HEALTH: %d%%", health));
+void GameScene::updateHud() {
+    scoreLabel->setString(StringUtils::format("%d", score));
+    healthLabel->setString(StringUtils::format("%d", health));
 }
 
 void GameScene::spawnCreep(const Creep::Type& creepType) {
@@ -248,12 +271,12 @@ void GameScene::update(float dt) {
     
     if (proximityMine->getCrater()->isVisible()) {
         checkCollisionsWithCrater(proximityMine->getCrater());
-        updateHUD();
+        updateHud();
     }
     
     if (remoteMine->getCrater()->isVisible()) {
         checkCollisionsWithCrater(remoteMine->getCrater());
-        updateHUD();
+        updateHud();
     }
     
     proximityMine->setPosition(proximityMine->getNextPosition());
@@ -311,8 +334,7 @@ void GameScene::onTouchMoved(Touch* touch, Event* event) {
         if (mine->getTouch() && mine->getTouch() == touch) {
             keepMineInsideScreen(proximityMine, touchLocation);
             mine->setNextPosition(touchLocation);
-            const auto& mineBoundingBox = mine->getBoundingBox();
-            if (mineBoundingBox.intersectsRect(remoteMineIconRect) || mineBoundingBox.intersectsRect(proximityMineIconRect)) {
+            if (intersectsHud(mine)) {
                 mine->setColor(Color3B::BLACK);
             } else {
                 mine->setColor(Color3B::WHITE);
@@ -326,8 +348,7 @@ void GameScene::onTouchEnded(Touch* touch, Event* event) {
     for (auto mine : mines) {
         if (mine->getTouch() && mine->getTouch() == touch) {
             keepMineInsideScreen(proximityMine, touchLocation);
-            const auto& mineBoundingBox = mine->getBoundingBox();
-            if (mineBoundingBox.intersectsRect(remoteMineIconRect) || mineBoundingBox.intersectsRect(proximityMineIconRect)) {
+            if (intersectsHud(mine)) {
                 mine->setColor(Color3B::WHITE);
                 mine->returnToHUD();
                 SimpleAudioEngine::getInstance()->playEffect("Mine_Error.mp3");
@@ -360,5 +381,5 @@ void GameScene::changeHealth(const int value) {
     if (health > 100) {
         health = 100;
     }
-    updateHUD();
+    updateHud();
 }
