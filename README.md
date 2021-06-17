@@ -9,20 +9,18 @@
   - Катапульта (осадная тележка). Наносит 30% урона, за подрыв игрок получает 3 очка.
 - Игра прекращается, как только крипы нанесут суммарно 100% урона.
 
-[![](https://j.gifs.com/NOxDjm.gif)](https://youtu.be/m7RbxXWPCR0)
+![](https://j.gifs.com/RlgQZz.gif)
 
-Скачать v0.3.1 Beta:
-- [macOS](https://github.com/kemiisto/Techies/releases/download/v0.3.1/Techies.macOS.zip)
-- [Windows](https://github.com/kemiisto/Techies/releases/download/v0.3.1/Techies.Windows.zip)
+Скачать v0.3.2 Beta:
+- [macOS](https://github.com/kemiisto/Techies/releases/download/v0.3.2/Techies.macOS.zip)
+- [Windows](https://github.com/kemiisto/Techies/releases/download/v0.3.2/Techies.Windows.zip)
 
 Build instructions:
 - Windows
   - `cd proj.win32`
   - `cmake .. -G "Visual Studio 16 2019" -AWin32`
   - Open Techies.sln, set Techies as startup project.
-  - Open Techies project properties, go to C/C++ -> Language and change "C++ Language Standard" value to "ISO C++17 Standard (/std:c++17)".
 - macOS
   - `cd proj.ios_mac/mac`
   - `cmake ../.. -GXcode`
   - Open Techies.xcodeproj, set Techies as active scheme.
-  - Open Techies project properties and change the following Build settings for Techies target: in Apple Clang - Custom Compiler Flags -> Other C++ Flags change all `-std=c++11` entries to `-std=c++17`.
