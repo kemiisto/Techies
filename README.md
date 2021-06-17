@@ -9,7 +9,7 @@
   - Катапульта (осадная тележка). Наносит 30% урона, за подрыв игрок получает 3 очка.
 - Игра прекращается, как только крипы нанесут суммарно 100% урона.
 
-![techies](https://user-images.githubusercontent.com/230239/122428668-cad80500-cf9a-11eb-87c0-05a071e0f477.PNG)
+![techies](https://user-images.githubusercontent.com/230239/122428966-0f63a080-cf9b-11eb-9c8c-7aa1dd000b6e.PNG)
 
 Скачать v0.3.2 Beta:
 - [macOS](https://github.com/kemiisto/Techies/releases/download/v0.3.2/Techies.macOS.zip)
