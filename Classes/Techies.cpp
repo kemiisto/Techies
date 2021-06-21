@@ -23,16 +23,6 @@ bool Techies::init() {
     return initWithFile("hero_techies/00.png");
 }
 
-Techies* Techies::create() {
-    auto object = new (std::nothrow) Techies();
-    if (object && object->init()) {
-        object->autorelease();
-        return object;
-    }
-    CC_SAFE_DELETE(object);
-    return nullptr;
-}
-
 void Techies::plantMine(Mine* mine, const Vec2& location) {
     assert(state == State::Idle);
 	

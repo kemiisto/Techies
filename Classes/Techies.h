@@ -6,8 +6,6 @@
 class Mine;
 class Techies final : public cocos2d::Sprite {
 public:
-    static Techies* create();
-    
     ~Techies() override;
 
     bool init() override;
@@ -22,6 +20,8 @@ public:
 
     bool isIdle() const;
     void setIdle();
+
+	CREATE_FUNC(Techies)
 private:
     enum class State {
         Idle,
