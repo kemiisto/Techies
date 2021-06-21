@@ -19,7 +19,7 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace rapidjson;
 
-#define GET_VARIABLE_NAME(Variable) (#Variable)
+#define VAR_NAME(Variable) (#Variable)
 
 const auto gameOverDelay = 2.0f;
 
@@ -130,10 +130,10 @@ void GameScene::createBackground() {
 }
 
 void GameScene::createHud(const Ui& ui) {
-    bottomLeftHudSprite = ui.createSprite(GET_VARIABLE_NAME(bottomLeftHudSprite), screenSize);
+    bottomLeftHudSprite = ui.createSprite(VAR_NAME(bottomLeftHudSprite), screenSize);
     addChild(bottomLeftHudSprite, 1);
 
-    bottomRightHudSprite = ui.createSprite(GET_VARIABLE_NAME(bottomRightHudSprite), screenSize);
+    bottomRightHudSprite = ui.createSprite(VAR_NAME(bottomRightHudSprite), screenSize);
     addChild(bottomRightHudSprite, 1);
 
 	topLeftHud = Sprite::create("left_hud.png");
@@ -145,7 +145,7 @@ void GameScene::createHud(const Ui& ui) {
     heart->setPosition(50, screenSize.height - 50);
     addChild(heart, 1);
     
-    healthLabel = ui.createLabel(GET_VARIABLE_NAME(healthLabel), screenSize);
+    healthLabel = ui.createLabel(VAR_NAME(healthLabel), screenSize);
     addChild(healthLabel, 1);
 
     topRightHud = Sprite::create("right_hud.png");
@@ -157,12 +157,12 @@ void GameScene::createHud(const Ui& ui) {
     coin->setPosition(screenSize.width - 50, screenSize.height - 50);
     addChild(coin, 1);
 
-    scoreLabel = ui.createLabel(GET_VARIABLE_NAME(scoreLabel), screenSize);
+    scoreLabel = ui.createLabel(VAR_NAME(scoreLabel), screenSize);
     addChild(scoreLabel, 1);
 }
 
 void GameScene::createLabels(const Ui& ui) {
-    playButton = ui.createButton(GET_VARIABLE_NAME(playButton), screenSize);
+    playButton = ui.createButton(VAR_NAME(playButton), screenSize);
     playButton->addTouchEventListener([this](Ref* sender, ui::Widget::TouchEventType type) {
 	    if (type == ui::Widget::TouchEventType::ENDED) {
             playButton->setVisible(false);
@@ -171,11 +171,11 @@ void GameScene::createLabels(const Ui& ui) {
     });
     addChild(playButton, 2);
     
-    gameOverLabel = ui.createLabel(GET_VARIABLE_NAME(gameOverLabel), screenSize);
+    gameOverLabel = ui.createLabel(VAR_NAME(gameOverLabel), screenSize);
     gameOverLabel->setVisible(false);
     addChild(gameOverLabel, 2);
 
-    tryAgainLabel = ui.createLabel(GET_VARIABLE_NAME(tryAgainLabel), screenSize);
+    tryAgainLabel = ui.createLabel(VAR_NAME(tryAgainLabel), screenSize);
     tryAgainLabel->setVisible(false);
     addChild(tryAgainLabel, 2);
 }
