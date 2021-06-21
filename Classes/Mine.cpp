@@ -11,14 +11,7 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 
 Mine::Mine(const Vec2& position) : Sprite(),
-        originalPosition(position),
-        state(State::Created),
-        nextPosition(Vec2(0,0)),
-        touch(nullptr),
-        explosion(nullptr),
-        smoke(nullptr),
-        flyingSprite(nullptr),
-        crater(nullptr) {
+        originalPosition(position) {
 }
 
 Mine* Mine::create(GameScene* scene, const std::string& filename, const Vec2& position) {

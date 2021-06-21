@@ -43,8 +43,8 @@ private:
     const AnimationsInfo animationsInfo;
     const int value;
     const int damage;
-    cocos2d::Animate* animateRun;
-    cocos2d::Animate* animateDie;
+    cocos2d::Animate* animateRun = nullptr;
+    cocos2d::Animate* animateDie = nullptr;
 };
 
 #endif // TECHIES_CREEP_H

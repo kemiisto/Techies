@@ -19,9 +19,7 @@ Creep::Creep(std::string folderName, AnimationsInfo animationsInfo, int value, i
         folderName(std::move(folderName)),
         animationsInfo(std::move(animationsInfo)),
 		value(value),
-		damage(damage),
-        animateRun(nullptr),
-        animateDie(nullptr) {
+		damage(damage) {
 }
 
 void Creep::createRunAnimation(int alternative) {

@@ -29,8 +29,8 @@ private:
     };
 	
     explicit Techies();
-    cocos2d::Animation* minePlantingAnimation;
-    State state;
+    cocos2d::Animation* minePlantingAnimation = nullptr;
+    State state = State::Idle;
 	
     void createMinePlantingAnimation();
 };

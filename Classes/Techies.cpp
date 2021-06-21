@@ -11,9 +11,7 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-Techies::Techies() : Sprite(),
-         minePlantingAnimation(nullptr),
-         state(State::Idle) {
+Techies::Techies() : Sprite() {
     createMinePlantingAnimation();
 }
 

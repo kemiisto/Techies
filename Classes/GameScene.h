@@ -38,33 +38,33 @@ public:
     bool init() override;
     CREATE_FUNC(GameScene)
 private:
-    GameState state;
+    GameState state = GameState::Launched;
     const cocos2d::Size screenSize;
 
     std::unique_ptr<Creeps> creeps;
     std::vector<Creep*> runningCreeps;
 
-    Mine* remoteMine;
-    Mine* proximityMine;
+    Mine* remoteMine = nullptr;
+    Mine* proximityMine = nullptr;
     std::vector<Mine*> mines;
     
-    Techies* techies;
+    Techies* techies = nullptr;
 
     std::map<Creep::Type, float> creepSpawnInterval;
     std::map<Creep::Type, float> creepSpawnTimer;
-    float gameOverDelayTimer;
+    float gameOverDelayTimer = 0.0f;
     
-    int score;
-    int health;
+    int score = 0;
+    int health = 100;
     
     void stop();
     
     void changeHealth(int value);
 
-    cocos2d::Label* scoreLabel;
-    cocos2d::Label* healthLabel;
-    cocos2d::Label* gameOverLabel;
-    cocos2d::Label* tryAgainLabel;
+    cocos2d::Label* scoreLabel = nullptr;
+    cocos2d::Label* healthLabel = nullptr;
+    cocos2d::Label* gameOverLabel = nullptr;
+    cocos2d::Label* tryAgainLabel = nullptr;
 
     cocos2d::ui::Button* playButton = nullptr;
 

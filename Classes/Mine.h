@@ -58,13 +58,13 @@ private:
     explicit Mine(const cocos2d::Vec2& position);
     
     const cocos2d::Vec2 originalPosition;
-    State state;
+    State state = State::Created;
     cocos2d::Vec2 nextPosition;
-    cocos2d::Touch* touch;
-    cocos2d::ParticleSystemQuad* explosion;
-    cocos2d::ParticleSystemQuad* smoke;
-    Sprite* flyingSprite;
-    Sprite* crater;
+    cocos2d::Touch* touch = nullptr;
+    cocos2d::ParticleSystemQuad* explosion = nullptr;
+    cocos2d::ParticleSystemQuad* smoke = nullptr;
+    Sprite* flyingSprite = nullptr;
+    Sprite* crater = nullptr;
     void createCrater(GameScene* scene);
     void createFlyingSprite(GameScene* scene);
     void createExplosion(GameScene* scene);

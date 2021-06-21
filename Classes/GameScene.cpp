@@ -65,23 +65,12 @@ void readConfig(
 }
 
 GameScene::GameScene() :
-		state(GameState::Launched),
 		screenSize(Director::getInstance()->getWinSize()),
-		remoteMine(nullptr),
-		proximityMine(nullptr),
-		techies(nullptr),
 		creepSpawnTimer{
 			{Creep::Type::Melee, 2.0f},
 			{Creep::Type::Ranged, 0.0f},
 			{Creep::Type::Siege, 0.0f}
-		},
-		gameOverDelayTimer(0.0f),
-		score(0),
-		health(100),
-		scoreLabel(nullptr),
-		healthLabel(nullptr),
-		gameOverLabel(nullptr),
-		tryAgainLabel(nullptr) {
+		} {
 }
 
 bool GameScene::init() {
